@@ -10,4 +10,8 @@ public class SimpleBean {
         System.out.println("test!!!");
         serviceRequest.getUser(3);
     }
+
+    public void testCallFunction(){
+        testCall();
+    }
 }
