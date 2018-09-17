@@ -1,6 +1,6 @@
 package com.sbrf.meta.plugin.asm;
 
-import com.sbrf.meta.plugin.asm.api.ApiStorage;
+import com.sbrf.meta.plugin.dto.api.ApiStorage;
 import com.sbrf.meta.plugin.asm.parser.ApiCallParser;
 import com.sbrf.meta.plugin.asm.parser.ApiImplParser;
 import com.sbrf.meta.plugin.asm.parser.ApiParser;
@@ -20,10 +20,11 @@ public class AsmParser {
         this.nodes = ParserUtils.loadClasses(jars);
     }
 
-    public void parse() {
+    public ApiStorage parse() {
         ApiStorage storage = ApiParser.findApi(nodes);
         ApiImplParser.findApiImpl(nodes, storage);
         ApiRequestParser.findApiRequests(nodes, storage);
         ApiCallParser.findCall(nodes, storage);
+        return storage;
     }
 }

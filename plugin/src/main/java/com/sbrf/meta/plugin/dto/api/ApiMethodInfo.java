@@ -1,4 +1,4 @@
-package com.sbrf.meta.plugin.asm.api;
+package com.sbrf.meta.plugin.dto.api;
 
 public class ApiMethodInfo {
     public final String methodName;

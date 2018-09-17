@@ -1,4 +1,4 @@
-package com.sbrf.meta.plugin.asm.api;
+package com.sbrf.meta.plugin.dto.api;
 
 import java.util.HashMap;
 import java.util.Map;
