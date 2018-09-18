@@ -2,13 +2,15 @@ package com.sbrf.meta.plugin.launch;
 
 
 import com.sbrf.meta.plugin.Parser;
+import com.sbrf.meta.plugin.dto.api.ApiStorage;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.AbstractMojo;
-import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.*;
 import org.apache.maven.project.MavenProject;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -25,14 +27,17 @@ public class ParserMojo extends AbstractMojo {
     @Parameter(defaultValue = "${project.build.sourceDirectory}")
     private String sourceDir;
 
+    @Parameter(defaultValue = "${project.build.directory}")
+    private String directory;
 
-    public void execute() throws MojoExecutionException {
+    public void execute() {
         getLog().info("Start parse");
         Set<File> jars = getDependency();
         jars.add(getJar());
         Collection<File> source = new ArrayList<>();
         collectFileFromDir(new File(sourceDir), source);
-        Parser.parse(jars, source);
+        ApiStorage storage = Parser.parse(jars, source);
+        saveToFile(storage.toJson().toString());
 
     }
 
@@ -56,6 +61,14 @@ public class ParserMojo extends AbstractMojo {
             if (file.isFile()) {
                 result.add(file);
             }
+        }
+    }
+
+    public void saveToFile(String json) {
+        try (FileWriter file = new FileWriter(directory + "/api.json")) {
+            file.write(json);
+        } catch (IOException e) {
+            throw new RuntimeException(e.getMessage(), e);
         }
     }
 }
