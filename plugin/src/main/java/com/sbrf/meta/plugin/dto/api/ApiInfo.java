@@ -1,6 +1,8 @@
 package com.sbrf.meta.plugin.dto.api;
 
 import com.sbrf.meta.plugin.asm.util.ParserUtils;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -34,14 +36,21 @@ public class ApiInfo {
         methodInfo.addCall(className);
     }
 
-    public void toJson() {
+    public JSONObject toJson() {
+        JSONObject result = new JSONObject();
+        result.put("class", apiClass);
+        JSONArray implArray = new JSONArray();
         for (String impl : impls) {
-
+            implArray.put(impl);
         }
+        result.put("implementation", implArray);
+
+        JSONArray methodArray = new JSONArray();
         for (ApiMethodInfo method : methods.values()) {
-
-            method.toJson();
+            methodArray.put(method.toJson());
         }
+        result.put("methods", methodArray);
+        return result;
     }
 
 }
