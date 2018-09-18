@@ -14,6 +14,8 @@ public class Parser {
         AsmParser jarParser = new AsmParser(jars);
         ApiStorage storage = jarParser.parse();
         SourceParser.parse(files, storage);
+
+        System.out.println(storage.toJson());
         return storage;
     }
 }

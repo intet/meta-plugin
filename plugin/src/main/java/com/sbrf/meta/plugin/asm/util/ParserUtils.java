@@ -74,4 +74,8 @@ public class ParserUtils {
         cr = null;
         return cn;
     }
+
+    public static String getMethodSignature(String method, String desc) {
+        return method + desc.substring(desc.indexOf("("), desc.indexOf(")") + 1);
+    }
 }

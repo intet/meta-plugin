@@ -17,7 +17,6 @@ public class ApiImplParser {
         if (cn.interfaces != null) {
             for (String inter : cn.interfaces) {
                 if (storage.containsApi(inter)) {
-                    System.out.println("Implementation of " + inter + " is " + name);
                     storage.addApiImpl(inter, name);
                 }
             }

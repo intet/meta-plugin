@@ -1,5 +1,7 @@
 package com.sbrf.meta.plugin.dto.api;
 
+import com.sbrf.meta.plugin.asm.util.ParserUtils;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -15,8 +17,8 @@ public class ApiInfo {
         this.apiClass = apiClass;
     }
 
-    public void addMethod(String methodName, String desc) {
-        this.methods.put(methodName + desc, new ApiMethodInfo(methodName, desc));
+    public void addMethod(String methodName, String desc, String name, String version) {
+        this.methods.put(ParserUtils.getMethodSignature(methodName, desc), new ApiMethodInfo(methodName, desc, name, version));
     }
 
     public void addImpl(String implClass) {
@@ -26,4 +28,20 @@ public class ApiInfo {
     public void addRequest(String apiRequestClass) {
         this.apiRequestClass.add(apiRequestClass);
     }
+
+    public void addCall(String className, String methodName, String desc) {
+        ApiMethodInfo methodInfo = this.methods.get(ParserUtils.getMethodSignature(methodName, desc));
+        methodInfo.addCall(className);
+    }
+
+    public void toJson() {
+        for (String impl : impls) {
+
+        }
+        for (ApiMethodInfo method : methods.values()) {
+
+            method.toJson();
+        }
+    }
+
 }

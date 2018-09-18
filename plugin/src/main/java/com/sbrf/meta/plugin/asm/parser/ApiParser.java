@@ -1,7 +1,7 @@
 package com.sbrf.meta.plugin.asm.parser;
 
-import com.sbrf.meta.plugin.dto.api.ApiStorage;
 import com.sbrf.meta.plugin.asm.util.NodeUtils;
+import com.sbrf.meta.plugin.dto.api.ApiStorage;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.MethodNode;
 
@@ -22,9 +22,8 @@ public class ApiParser {
             for (MethodNode mn : cn.methods) {
                 if (!NodeUtils.hasAnnotation(mn, ANNOTATION_METHOD_NAME))
                     continue;
-                Map<String, Object> params = NodeUtils.getAnnotationParams(mn, ANNOTATION_METHOD_NAME);
-                System.out.println("Api method " + mn.name + "(" + params.get("apiName") + ", version " + params.get("version") + ")" + " in class " + cn.name);
-                storage.addApi(cn.name, mn.name, mn.desc);
+                Map<String, String> params = NodeUtils.getAnnotationParams(mn, ANNOTATION_METHOD_NAME);
+                storage.addApi(cn.name, mn.name, mn.desc, params.get("apiName"), params.get("version"));
             }
         }
         return storage;

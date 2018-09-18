@@ -6,48 +6,29 @@ import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 public class ApiCallParser {
-    /**
-     * @return ApiRequest - Api
-     */
-    public static Map<String, Set<String>> findCall(Map<String, ClassNode> nodes, ApiStorage storage) {
-        Map<String, Set<String>> result = new HashMap<>();
+    public static void findCall(Map<String, ClassNode> nodes, ApiStorage storage) {
         for (ClassNode cn : nodes.values()) {
-            Set<String> apiCalls = findCall(storage, cn, nodes);
-            if (apiCalls.size() > 0) {
-                result.put(cn.name, apiCalls);
-            }
+            findCall(storage, cn, nodes);
         }
-
-        return result;
     }
 
-    private static Set<String> findCall(ApiStorage storage, ClassNode cn, Map<String, ClassNode> nodes) {
-        Set<String> result = new HashSet<>();
+    private static void findCall(ApiStorage storage, ClassNode cn, Map<String, ClassNode> nodes) {
         for (MethodNode mn : cn.methods) {
-            Set<String> apiCalls = new HashSet<>();
-
-            findCallInMethod(mn, storage, cn.name, apiCalls, nodes);
-            result.addAll(apiCalls);
+            findCallInMethod(mn, storage, cn.name, nodes);
         }
-        return result;
     }
 
-    private static void findCallInMethod(MethodNode mn, ApiStorage storage, String className, Set<String> apiCalls, Map<String, ClassNode> nodes) {
+    private static void findCallInMethod(MethodNode mn, ApiStorage storage, String className, Map<String, ClassNode> nodes) {
         for (AbstractInsnNode ain : mn.instructions.toArray()) {
             if (ain.getType() == AbstractInsnNode.METHOD_INSN) {
                 MethodInsnNode methodNode = (MethodInsnNode) ain;
                 String owner = methodNode.owner;
-                String apiCall = checkImplement(owner, storage, nodes);
-
-                if (apiCall != null) {
-                    apiCalls.add(apiCall);
-                    System.out.println("Class " + className + " call api " + apiCall + ":" + methodNode.name + " (" + methodNode.desc + ")");
+                String apiClass = checkImplement(owner, storage, nodes);
+                if (apiClass != null) {
+                    storage.addCall(apiClass, className, methodNode.name, methodNode.desc);
                 }
             }
         }

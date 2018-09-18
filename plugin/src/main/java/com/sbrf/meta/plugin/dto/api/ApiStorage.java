@@ -9,13 +9,13 @@ public class ApiStorage {
     //Api Request Class - ApiInfo
     private Map<String, ApiInfo> apiRequestMap = new HashMap<>();
 
-    public void addApi(String apiClass, String methodName, String desc) {
+    public void addApi(String apiClass, String methodName, String desc, String name, String version) {
         ApiInfo apiInfo = this.apiMap.get(apiClass);
         if (apiInfo == null) {
             apiInfo = new ApiInfo(apiClass);
             this.apiMap.put(apiInfo.apiClass, apiInfo);
         }
-        apiInfo.addMethod(methodName, desc);
+        apiInfo.addMethod(methodName, desc, name, version);
     }
 
     public boolean containsApi(String api) {
@@ -32,6 +32,11 @@ public class ApiStorage {
         this.apiRequestMap.put(apiRequestClass, apiInfo);
     }
 
+    public void addCall(String apiClass, String className, String method, String desc) {
+        ApiInfo apiInfo = this.apiMap.get(apiClass);
+        apiInfo.addCall(className, method, desc);
+    }
+
     public boolean containsApiRequest(String apiRequestClass) {
         return apiRequestMap.containsKey(apiRequestClass);
     }
@@ -39,4 +44,14 @@ public class ApiStorage {
     public String getApiByRequest(String apiRequestClass) {
         return apiRequestMap.get(apiRequestClass).apiClass;
     }
+
+    public String toJson() {
+
+        for (ApiInfo apiInfo : apiMap.values()) {
+            apiInfo.toJson();
+        }
+
+        return null;
+    }
+
 }
