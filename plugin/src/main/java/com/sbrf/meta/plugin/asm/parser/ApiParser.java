@@ -15,8 +15,6 @@ public class ApiParser {
         ApiStorage storage = new ApiStorage();
         for (ClassNode cn : nodes.values()) {
             // Iterate methods in class
-            if (cn.invisibleAnnotations == null)
-                continue;
             if (!NodeUtils.hasAnnotation(cn, ANNOTATION_NAME))
                 continue;
             for (MethodNode mn : cn.methods) {
