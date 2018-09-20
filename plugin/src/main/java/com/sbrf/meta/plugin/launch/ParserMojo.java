@@ -33,7 +33,10 @@ public class ParserMojo extends AbstractMojo {
     public void execute() {
         getLog().info("Start parse");
         Set<File> jars = getDependency();
-        jars.add(getJar());
+        File jar = getJar();
+        if (jar != null) {
+            jars.add(jar);
+        }
         Collection<File> source = new ArrayList<>();
         collectFileFromDir(new File(sourceDir), source);
         ApiStorage storage = Parser.parse(jars, source);
@@ -55,6 +58,8 @@ public class ParserMojo extends AbstractMojo {
 
     public void collectFileFromDir(File dir, Collection<File> result) {
         File[] files = dir.listFiles();
+        if (files == null)
+            return;
         for (File file : files) {
             if (file.isDirectory())
                 collectFileFromDir(file, result);
