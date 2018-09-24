@@ -3,6 +3,7 @@ package com.sbrf.meta.plugin.dto.api;
 import org.json.JSONArray;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ApiStorage {
@@ -11,13 +12,13 @@ public class ApiStorage {
     //Api Request Class - ApiInfo
     private Map<String, ApiInfo> apiRequestMap = new HashMap<>();
 
-    public void addApi(String apiClass, String methodName, String desc, String name, String version) {
+    public void addApi(String apiClass, String methodName, String desc, String name, String version, List<Dto> dto, Dto result) {
         ApiInfo apiInfo = this.apiMap.get(apiClass);
         if (apiInfo == null) {
             apiInfo = new ApiInfo(apiClass);
             this.apiMap.put(apiInfo.apiClass, apiInfo);
         }
-        apiInfo.addMethod(methodName, desc, name, version);
+        apiInfo.addMethod(methodName, desc, name, version, dto, result);
     }
 
     public boolean containsApi(String api) {

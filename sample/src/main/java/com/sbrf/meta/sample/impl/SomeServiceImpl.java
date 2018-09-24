@@ -7,4 +7,9 @@ public class SomeServiceImpl implements SomeService {
     public User getUser(Integer id) {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public String saveUser(Integer id, User user) {
+        throw new UnsupportedOperationException();
+    }
 }
