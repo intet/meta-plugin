@@ -8,15 +8,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Dto {
-    public String dtoClass;
-    public Map<String, Dto> fields = new HashMap<>();
+    public final String dtoClass;
+    public final Map<String, Dto> fields = new HashMap<>();
+    public Dto superClass;
 
     public Dto(String dtoClass) {
         this.dtoClass = dtoClass;
     }
 
     public Dto(ClassNode classNode, Map<String, ClassNode> nodes) {
-        this.dtoClass = classNode.name;
+        this(classNode.name);
+        if (nodes.get(classNode.superName) != null) {
+            this.superClass = new Dto(nodes.get(classNode.superName), nodes);
+        } else {
+            this.superClass = new Dto(classNode.superName);
+        }
         if (classNode.fields != null) {
             for (FieldNode field : classNode.fields) {
                 String fieldClass = field.desc.substring(1, field.desc.length() - 1);
@@ -36,6 +42,8 @@ public class Dto {
             }
             result.put("fields", dtoArray);
         }
+        if (this.superClass != null)
+            result.put("super", this.superClass.toJson());
         return result;
     }
 }
