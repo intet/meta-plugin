@@ -10,7 +10,8 @@ public class Main {
     public static void main(String... args) {
         File jar = new File("/Users/intet/sbrf/meta/plugin/sample/target/sample-1.0-SNAPSHOT.jar");
         File source = new File("/Users/intet/sbrf/meta/plugin/sample/src/main/java/com/sbrf/meta/sample/api/SomeService.java");
-        ApiStorage storage = Parser.parse(Collections.singleton(jar), Collections.singleton(source));
+        ApiStorage storage = Parser.parse(Collections.singletonMap(new GAV("com.sbrf.meta", "plugin", "0.1"), jar),
+                Collections.singleton(source));
         System.out.println(storage.toJson());
     }
 }

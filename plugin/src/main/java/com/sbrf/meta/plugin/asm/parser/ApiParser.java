@@ -4,6 +4,7 @@ import com.sbrf.meta.plugin.asm.util.DtoUtils;
 import com.sbrf.meta.plugin.asm.util.NodeUtils;
 import com.sbrf.meta.plugin.dto.api.ApiStorage;
 import com.sbrf.meta.plugin.dto.api.Dto;
+import com.sbrf.meta.plugin.launch.GAV;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.MethodNode;
 
@@ -14,7 +15,7 @@ public class ApiParser {
     public static final String ANNOTATION_NAME = "Lcom/sbt/core/amqp/annotations/Api;";
     public static final String ANNOTATION_METHOD_NAME = "Lcom/sbt/core/amqp/annotations/registry/ApiMethod;";
 
-    public static ApiStorage findApi(Map<String, ClassNode> nodes) {
+    public static ApiStorage findApi(Map<String, ClassNode> nodes, Map<String, GAV> metaInfo) {
         ApiStorage storage = new ApiStorage();
         for (ClassNode cn : nodes.values()) {
             // Iterate methods in class
@@ -27,8 +28,9 @@ public class ApiParser {
                 String desc = mn.signature != null ? mn.signature : mn.desc;
                 List<Dto> dto = getSignature(desc, nodes);
                 Dto result = getResult(desc, nodes);
-                storage.addApi(cn.name, mn.name, mn.desc, params.get("apiName"), params.get("version"),
-                        dto, result);
+                GAV gav = metaInfo.get(cn.name);
+                storage.addApi(cn.name, mn.name, mn.desc, gav,
+                        params.get("apiName"), params.get("version"), dto, result);
             }
         }
         return storage;
