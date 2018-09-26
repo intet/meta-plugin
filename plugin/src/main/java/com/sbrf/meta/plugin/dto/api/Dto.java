@@ -1,5 +1,6 @@
 package com.sbrf.meta.plugin.dto.api;
 
+import com.sbrf.meta.plugin.asm.util.DtoUtils;
 import org.json.JSONObject;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.FieldNode;
@@ -18,15 +19,12 @@ public class Dto {
 
     public Dto(ClassNode classNode, Map<String, ClassNode> nodes) {
         this(classNode.name);
-        if (nodes.get(classNode.superName) != null) {
-            this.superClass = new Dto(nodes.get(classNode.superName), nodes);
-        } else {
-            this.superClass = new Dto(classNode.superName);
-        }
+        this.superClass = DtoUtils.getDto(classNode.superName, nodes);
         if (classNode.fields != null) {
             for (FieldNode field : classNode.fields) {
-                String fieldClass = field.desc.substring(1, field.desc.length() - 1);
-                Dto fieldDto = nodes.get(fieldClass) != null ? new Dto(nodes.get(fieldClass), nodes) : new Dto(fieldClass);
+                String fieldClass = field.signature != null ? field.signature : field.name;
+                fieldClass = fieldClass.substring(1, fieldClass.length() - 1);
+                Dto fieldDto = DtoUtils.getDto(fieldClass, nodes);
                 this.fields.put(field.name, fieldDto);
             }
         }
