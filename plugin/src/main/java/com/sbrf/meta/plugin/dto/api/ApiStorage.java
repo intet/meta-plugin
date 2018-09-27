@@ -26,8 +26,8 @@ public class ApiStorage {
         return apiMap.containsKey(api);
     }
 
-    public void addApiImpl(String apiClass, String implClass) {
-        this.apiMap.get(apiClass).addImpl(implClass);
+    public void addApiImpl(String apiClass, String implClass, GAV gav) {
+        this.apiMap.get(apiClass).addImpl(implClass, gav);
     }
 
     public void addRequest(String apiClass, String apiRequestClass) {

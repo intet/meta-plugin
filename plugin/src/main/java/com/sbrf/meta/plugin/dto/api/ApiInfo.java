@@ -11,7 +11,7 @@ public class ApiInfo {
     public final String apiClass;
     public final GAV gav;
     public final Set<String> apiRequestClass = new HashSet<>();
-    public final Set<String> impls = new HashSet<>();
+    public final Set<ApiImpl> impls = new HashSet<>();
     public final Map<String, ApiMethodInfo> methods = new HashMap<>();
 
 
@@ -25,8 +25,8 @@ public class ApiInfo {
                 new ApiMethodInfo(methodName, desc, name, version, dto, result));
     }
 
-    public void addImpl(String implClass) {
-        this.impls.add(implClass);
+    public void addImpl(String implClass, GAV gav) {
+        this.impls.add(new ApiImpl(implClass, gav));
     }
 
     public void addRequest(String apiRequestClass) {
@@ -43,8 +43,8 @@ public class ApiInfo {
         result.put("class", apiClass.replace('/', '.'));
         result.put("gav", gav.toJson());
         JSONArray implArray = new JSONArray();
-        for (String impl : impls) {
-            implArray.put(impl.replace('/', '.'));
+        for (ApiImpl impl : impls) {
+            implArray.put(impl.toJson());
         }
         result.put("implementation", implArray);
 

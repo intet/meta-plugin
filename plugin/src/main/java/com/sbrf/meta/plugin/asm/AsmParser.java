@@ -29,7 +29,7 @@ public class AsmParser {
 
     public ApiStorage parse() {
         ApiStorage storage = ApiParser.findApi(nodes, metaInfo);
-        ApiImplParser.findApiImpl(nodes, storage);
+        ApiImplParser.findApiImpl(nodes, metaInfo, storage);
         ApiRequestParser.findApiRequests(nodes, storage);
         ApiCallParser.findCall(nodes, metaInfo, storage);
         return storage;
