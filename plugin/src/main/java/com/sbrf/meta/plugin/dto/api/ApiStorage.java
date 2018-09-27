@@ -36,9 +36,9 @@ public class ApiStorage {
         this.apiRequestMap.put(apiRequestClass, apiInfo);
     }
 
-    public void addCall(String apiClass, String className, String method, String desc) {
+    public void addCall(String apiClass, String className, GAV gav, String method, String desc) {
         ApiInfo apiInfo = this.apiMap.get(apiClass);
-        apiInfo.addCall(className, method, desc);
+        apiInfo.addCall(className, gav, method, desc);
     }
 
     public boolean containsApiRequest(String apiRequestClass) {

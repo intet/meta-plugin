@@ -33,9 +33,9 @@ public class ApiInfo {
         this.apiRequestClass.add(apiRequestClass);
     }
 
-    public void addCall(String className, String methodName, String desc) {
+    public void addCall(String className, GAV gav, String methodName, String desc) {
         ApiMethodInfo methodInfo = this.methods.get(ParserUtils.getMethodSignature(methodName, desc));
-        methodInfo.addCall(className);
+        methodInfo.addCall(className, gav);
     }
 
     public JSONObject toJson() {
