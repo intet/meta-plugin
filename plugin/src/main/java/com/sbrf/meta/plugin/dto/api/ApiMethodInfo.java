@@ -1,5 +1,6 @@
 package com.sbrf.meta.plugin.dto.api;
 
+import com.sbrf.meta.plugin.launch.GAV;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -14,7 +15,7 @@ public class ApiMethodInfo {
     public final String version;
     public final List<Dto> dto;
     public final Dto result;
-    public final Set<String> calls = new HashSet<>();
+    public final Set<ApiCall> calls = new HashSet<>();
 
     public ApiMethodInfo(String methodName, String signature, String name, String version, List<Dto> dto, Dto result) {
         this.methodName = methodName;
@@ -25,8 +26,8 @@ public class ApiMethodInfo {
         this.result = result;
     }
 
-    public void addCall(String className) {
-        calls.add(className);
+    public void addCall(String className, GAV gav) {
+        calls.add(new ApiCall(className, gav));
     }
 
     public JSONObject toJson() {
@@ -41,8 +42,8 @@ public class ApiMethodInfo {
         result.put("signature", dtoArray);
         result.put("result", this.result.toJson());
         JSONArray callArray = new JSONArray();
-        for (String className : calls) {
-            callArray.put(className.replace('/', '.'));
+        for (ApiCall call : calls) {
+            callArray.put(call.toJson());
         }
         result.put("call", callArray);
         return result;

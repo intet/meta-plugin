@@ -1,5 +1,6 @@
 package com.sbrf.meta.plugin.dto.api;
 
+import com.sbrf.meta.plugin.launch.GAV;
 import org.json.JSONArray;
 
 import java.util.HashMap;
@@ -12,10 +13,10 @@ public class ApiStorage {
     //Api Request Class - ApiInfo
     private Map<String, ApiInfo> apiRequestMap = new HashMap<>();
 
-    public void addApi(String apiClass, String methodName, String desc, String name, String version, List<Dto> dto, Dto result) {
+    public void addApi(String apiClass, String methodName, String desc, GAV gav, String name, String version, List<Dto> dto, Dto result) {
         ApiInfo apiInfo = this.apiMap.get(apiClass);
         if (apiInfo == null) {
-            apiInfo = new ApiInfo(apiClass);
+            apiInfo = new ApiInfo(apiClass, gav);
             this.apiMap.put(apiInfo.apiClass, apiInfo);
         }
         apiInfo.addMethod(methodName, desc, name, version, dto, result);
@@ -25,8 +26,8 @@ public class ApiStorage {
         return apiMap.containsKey(api);
     }
 
-    public void addApiImpl(String apiClass, String implClass) {
-        this.apiMap.get(apiClass).addImpl(implClass);
+    public void addApiImpl(String apiClass, String implClass, GAV gav) {
+        this.apiMap.get(apiClass).addImpl(implClass, gav);
     }
 
     public void addRequest(String apiClass, String apiRequestClass) {
@@ -35,9 +36,9 @@ public class ApiStorage {
         this.apiRequestMap.put(apiRequestClass, apiInfo);
     }
 
-    public void addCall(String apiClass, String className, String method, String desc) {
+    public void addCall(String apiClass, String className, GAV gav, String method, String desc) {
         ApiInfo apiInfo = this.apiMap.get(apiClass);
-        apiInfo.addCall(className, method, desc);
+        apiInfo.addCall(className, gav, method, desc);
     }
 
     public boolean containsApiRequest(String apiRequestClass) {

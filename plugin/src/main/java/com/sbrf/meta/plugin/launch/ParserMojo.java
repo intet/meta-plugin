@@ -13,8 +13,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 @Mojo(name = "findApi", requiresDependencyResolution = ResolutionScope.COMPILE,
         defaultPhase = LifecyclePhase.PACKAGE, executionStrategy = "always")
@@ -32,11 +32,7 @@ public class ParserMojo extends AbstractMojo {
 
     public void execute() {
         getLog().info("Start parse");
-        Set<File> jars = getDependency();
-        File jar = getJar();
-        if (jar != null) {
-            jars.add(jar);
-        }
+        Map<GAV, File> jars = getJars();
         Collection<File> source = new ArrayList<>();
         collectFileFromDir(new File(sourceDir), source);
         ApiStorage storage = Parser.parse(jars, source);
@@ -44,19 +40,20 @@ public class ParserMojo extends AbstractMojo {
 
     }
 
-    private Set<File> getDependency() {
-        Set<File> result = new HashSet<>();
+    private Map<GAV, File> getJars() {
+        Map<GAV, File> result = new HashMap<>();
         for (Artifact artifact : project.getArtifacts()) {
-            result.add(artifact.getFile());
-            getLog().info("jar " + artifact.getFile().getAbsolutePath());
+            File file = artifact.getFile();
+            if (file == null)
+                continue;
+            result.put(new GAV(artifact), file);
+            getLog().info("jar " + file.getAbsolutePath());
+        }
+        if (project.getArtifact().getFile() != null) {
+            result.put(new GAV(project.getArtifact()), project.getArtifact().getFile());
         }
         return result;
     }
-
-    private File getJar() {
-        return project.getArtifact().getFile();
-    }
-
     private void collectFileFromDir(File dir, Collection<File> result) {
         File[] files = dir.listFiles();
         if (files == null)
