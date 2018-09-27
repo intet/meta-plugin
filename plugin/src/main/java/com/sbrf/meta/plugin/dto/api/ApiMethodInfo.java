@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class ApiMethodInfo {
@@ -11,13 +12,17 @@ public class ApiMethodInfo {
     public final String signature;
     public final String name;
     public final String version;
+    public final List<Dto> dto;
+    public final Dto result;
     public final Set<String> calls = new HashSet<>();
 
-    public ApiMethodInfo(String methodName, String signature, String name, String version) {
+    public ApiMethodInfo(String methodName, String signature, String name, String version, List<Dto> dto, Dto result) {
         this.methodName = methodName;
         this.signature = signature;
         this.name = name;
         this.version = version;
+        this.dto = dto;
+        this.result = result;
     }
 
     public void addCall(String className) {
@@ -29,10 +34,15 @@ public class ApiMethodInfo {
         result.put("method", methodName);
         result.put("name", name);
         result.put("version", version);
-        result.put("signature", signature);
+        JSONArray dtoArray = new JSONArray();
+        for (Dto className : dto) {
+            dtoArray.put(className.toJson());
+        }
+        result.put("signature", dtoArray);
+        result.put("result", this.result.toJson());
         JSONArray callArray = new JSONArray();
         for (String className : calls) {
-            callArray.put(className);
+            callArray.put(className.replace('/', '.'));
         }
         result.put("call", callArray);
         return result;

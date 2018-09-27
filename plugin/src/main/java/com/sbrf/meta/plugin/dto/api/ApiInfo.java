@@ -4,10 +4,7 @@ import com.sbrf.meta.plugin.asm.util.ParserUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class ApiInfo {
     public final String apiClass;
@@ -15,12 +12,14 @@ public class ApiInfo {
     public final Set<String> impls = new HashSet<>();
     public final Map<String, ApiMethodInfo> methods = new HashMap<>();
 
+
     public ApiInfo(String apiClass) {
         this.apiClass = apiClass;
     }
 
-    public void addMethod(String methodName, String desc, String name, String version) {
-        this.methods.put(ParserUtils.getMethodSignature(methodName, desc), new ApiMethodInfo(methodName, desc, name, version));
+    public void addMethod(String methodName, String desc, String name, String version, List<Dto> dto, Dto result) {
+        this.methods.put(ParserUtils.getMethodSignature(methodName, desc),
+                new ApiMethodInfo(methodName, desc, name, version, dto, result));
     }
 
     public void addImpl(String implClass) {
@@ -38,10 +37,10 @@ public class ApiInfo {
 
     public JSONObject toJson() {
         JSONObject result = new JSONObject();
-        result.put("class", apiClass);
+        result.put("class", apiClass.replace('/', '.'));
         JSONArray implArray = new JSONArray();
         for (String impl : impls) {
-            implArray.put(impl);
+            implArray.put(impl.replace('/', '.'));
         }
         result.put("implementation", implArray);
 

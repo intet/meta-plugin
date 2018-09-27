@@ -44,7 +44,7 @@ public class ParserMojo extends AbstractMojo {
 
     }
 
-    public Set<File> getDependency() {
+    private Set<File> getDependency() {
         Set<File> result = new HashSet<>();
         for (Artifact artifact : project.getArtifacts()) {
             result.add(artifact.getFile());
@@ -52,11 +52,12 @@ public class ParserMojo extends AbstractMojo {
         }
         return result;
     }
-    public File getJar(){
+
+    private File getJar() {
         return project.getArtifact().getFile();
     }
 
-    public void collectFileFromDir(File dir, Collection<File> result) {
+    private void collectFileFromDir(File dir, Collection<File> result) {
         File[] files = dir.listFiles();
         if (files == null)
             return;
@@ -69,7 +70,7 @@ public class ParserMojo extends AbstractMojo {
         }
     }
 
-    public void saveToFile(String json) {
+    private void saveToFile(String json) {
         try (FileWriter file = new FileWriter(directory + "/api.json")) {
             file.write(json);
         } catch (IOException e) {
