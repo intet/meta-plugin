@@ -22,7 +22,7 @@ public class Dto {
         this.superClass = DtoUtils.getDto(classNode.superName, nodes);
         if (classNode.fields != null) {
             for (FieldNode field : classNode.fields) {
-                String fieldClass = field.signature != null ? field.signature : field.name;
+                String fieldClass = field.signature != null ? field.signature : field.desc;
                 fieldClass = fieldClass.substring(1, fieldClass.length() - 1);
                 Dto fieldDto = DtoUtils.getDto(fieldClass, nodes);
                 this.fields.put(field.name, fieldDto);
