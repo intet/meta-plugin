@@ -1,4 +1,4 @@
-package com.sbrf.meta.plugin.launch;
+package com.sbrf.meta.plugin.dto.api;
 
 import org.apache.maven.artifact.Artifact;
 import org.json.JSONObject;

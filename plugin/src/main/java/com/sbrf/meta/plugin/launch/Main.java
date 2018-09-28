@@ -2,6 +2,7 @@ package com.sbrf.meta.plugin.launch;
 
 import com.sbrf.meta.plugin.Parser;
 import com.sbrf.meta.plugin.dto.api.ApiStorage;
+import com.sbrf.meta.plugin.dto.api.GAV;
 
 import java.io.File;
 import java.nio.file.Paths;

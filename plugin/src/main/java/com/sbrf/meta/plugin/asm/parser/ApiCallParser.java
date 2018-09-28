@@ -1,7 +1,7 @@
 package com.sbrf.meta.plugin.asm.parser;
 
 import com.sbrf.meta.plugin.dto.api.ApiStorage;
-import com.sbrf.meta.plugin.launch.GAV;
+import com.sbrf.meta.plugin.dto.api.GAV;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.MethodInsnNode;

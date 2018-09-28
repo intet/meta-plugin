@@ -2,7 +2,7 @@ package com.sbrf.meta.plugin;
 
 import com.sbrf.meta.plugin.asm.AsmParser;
 import com.sbrf.meta.plugin.dto.api.ApiStorage;
-import com.sbrf.meta.plugin.launch.GAV;
+import com.sbrf.meta.plugin.dto.api.GAV;
 
 import java.io.File;
 import java.util.Collection;

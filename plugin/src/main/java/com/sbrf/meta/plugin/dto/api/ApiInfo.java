@@ -1,7 +1,6 @@
 package com.sbrf.meta.plugin.dto.api;
 
 import com.sbrf.meta.plugin.asm.util.ParserUtils;
-import com.sbrf.meta.plugin.launch.GAV;
 import org.json.JSONArray;
 import org.json.JSONObject;
 

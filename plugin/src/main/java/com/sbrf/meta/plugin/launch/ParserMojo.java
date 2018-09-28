@@ -3,6 +3,7 @@ package com.sbrf.meta.plugin.launch;
 
 import com.sbrf.meta.plugin.Parser;
 import com.sbrf.meta.plugin.dto.api.ApiStorage;
+import com.sbrf.meta.plugin.dto.api.GAV;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugins.annotations.*;
