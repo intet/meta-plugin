@@ -12,10 +12,7 @@ import org.apache.maven.project.MavenProject;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Mojo(name = "findApi", requiresDependencyResolution = ResolutionScope.COMPILE,
         defaultPhase = LifecyclePhase.PACKAGE, executionStrategy = "always")
@@ -36,7 +33,8 @@ public class ParserMojo extends AbstractMojo {
         Map<GAV, File> jars = getJars();
         Collection<File> source = new ArrayList<>();
         collectFileFromDir(new File(sourceDir), source);
-        ApiStorage storage = Parser.parse(jars, source);
+        Collection<File> jarSource = getDependencySource();
+        ApiStorage storage = Parser.parse(jars, source, jarSource);
         saveToFile(storage.toJson().toString());
 
     }
@@ -77,5 +75,19 @@ public class ParserMojo extends AbstractMojo {
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
+    }
+
+    private Collection<File> getDependencySource() {
+        Set<File> result = new HashSet<>();
+        for (Artifact jarA : project.getArtifacts()) {
+            File jar = jarA.getFile();
+            if (jar == null) continue;
+            String path = jar.getPath();
+            File source = new File(path.substring(0, path.length() - 4) + "-sources.jar");
+            if (!source.exists()) continue;
+            result.add(source);
+
+        }
+        return result;
     }
 }
