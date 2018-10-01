@@ -8,6 +8,8 @@
         <outputRelativeToContentRoot value="true" />
         <module name="plugin" />
         <module name="sample" />
+        <module name="sample2" />
+        <module name="sample3" />
       </profile>
     </annotationProcessing>
   </component>
