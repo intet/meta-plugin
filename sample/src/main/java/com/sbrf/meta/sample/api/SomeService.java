@@ -9,7 +9,16 @@ import com.sbt.core.amqp.annotations.registry.ApiMethod;
 import java.util.List;
 
 @Api
+/**
+ * Пример простого сервиса
+ */
 public interface SomeService {
+    /**
+     * Получения пользователя по ID
+     *
+     * @param id - пользователя
+     * @return Пользователь
+     */
     @ApiMethod(apiName = "Получение пользователя", version = "2.4")
     Person getUser(Integer id);
 
