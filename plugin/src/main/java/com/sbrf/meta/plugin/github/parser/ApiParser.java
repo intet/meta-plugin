@@ -5,10 +5,9 @@ import com.github.javaparser.ast.body.BodyDeclaration;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
+import com.github.javaparser.resolution.declarations.ResolvedReferenceTypeDeclaration;
 import com.github.javaparser.symbolsolver.javaparsermodel.JavaParserFacade;
 import com.sbrf.meta.plugin.dto.api.ApiStorage;
-
-import java.util.Map;
 
 public class ApiParser{
     private final CompilationUnit unit;
@@ -25,29 +24,29 @@ public class ApiParser{
         for (TypeDeclaration<?> type : unit.getTypes()) {
             if (type instanceof ClassOrInterfaceDeclaration) {
                 ClassOrInterfaceDeclaration declaration = (ClassOrInterfaceDeclaration) type;
-                parseType(type, declaration);
+                parseType(declaration);
             }
         }
     }
 
-    private void parseType(TypeDeclaration<?> type, ClassOrInterfaceDeclaration declaration) {
+    private void parseType(ClassOrInterfaceDeclaration declaration) {
         if (Util.hasAnnotation(declaration, "Api")) {
-            String pack = unit.getPackageDeclaration().get().toString();
-            String apiName = pack.substring(8, pack.length() - 3) + "." + type.getNameAsString();
+            ResolvedReferenceTypeDeclaration typeDeclaration = facade.getTypeDeclaration(declaration);
+            String apiName = Util.convertToSlash(typeDeclaration.getQualifiedName());
+
             for (BodyDeclaration<?> member : declaration.getMembers()) {
                 if (member instanceof MethodDeclaration) {
-                    parseApiMethod(member, apiName);
+                    parseApiMethod((MethodDeclaration) member, apiName);
                 }
             }
+
         }
     }
 
-    private void parseApiMethod(BodyDeclaration member, String apiName) {
-        String name = "ApiMethod";
-        Map<String, String> params = Util.getAnnotationParam(member, name);
-        if (params != null) {
+    private void parseApiMethod(MethodDeclaration methodDeclaration, String apiName) {
+        String desc = Util.getMethodSignature(methodDeclaration.getName(), methodDeclaration.getParameters(), facade);
+        methodDeclaration.getComment().ifPresent(comment -> storage.addComment(apiName, desc, comment.getContent()));
 
-        }
     }
 /*
             ApiParser apiParser = new ApiParser(file);

@@ -15,6 +15,7 @@ public class ApiMethodInfo {
     public final List<Dto> dto;
     public final Dto result;
     public final Set<ApiCall> calls = new HashSet<>();
+    private String comment;
 
     public ApiMethodInfo(String methodName, String signature, String name, String version, List<Dto> dto, Dto result) {
         this.methodName = methodName;
@@ -45,7 +46,11 @@ public class ApiMethodInfo {
             callArray.put(call.toJson());
         }
         result.put("call", callArray);
+        result.put("comment", comment);
         return result;
     }
 
+    public void addComment(String comment) {
+        this.comment = comment;
+    }
 }

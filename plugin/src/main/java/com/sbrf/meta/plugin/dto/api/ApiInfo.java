@@ -55,4 +55,8 @@ public class ApiInfo {
         return result;
     }
 
+    public void addComment(String method, String comment) {
+        ApiMethodInfo methodInfo = this.methods.get(method);
+        methodInfo.addComment(comment);
+    }
 }

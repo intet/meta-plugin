@@ -56,4 +56,7 @@ public class ApiStorage {
         return result;
     }
 
+    public void addComment(String api, String method, String comment) {
+        this.apiMap.get(api).addComment(method, comment);
+    }
 }
