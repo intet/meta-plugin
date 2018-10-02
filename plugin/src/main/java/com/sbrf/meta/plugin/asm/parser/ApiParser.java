@@ -39,9 +39,13 @@ public class ApiParser {
     private static Dto getResult(String desc, Map<String, ClassNode> nodes) {
         String resultName = desc.substring(desc.indexOf(")") + 1, desc.length() - 1);
         if (resultName.length() == 0) {
-            return new Dto("void");
+            return new Dto("void", false);
         }
-        return DtoUtils.getDto(resultName.substring(1), nodes);
+        if (resultName.startsWith("+"))
+            resultName = "+" + resultName.substring(2);
+        else
+            resultName = resultName.substring(1);
+        return DtoUtils.getDto(resultName, nodes);
     }
 
     private static List<Dto> getSignature(String desc, Map<String, ClassNode> nodes) {
