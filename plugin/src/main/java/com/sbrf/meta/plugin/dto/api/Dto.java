@@ -10,15 +10,17 @@ import java.util.Map;
 
 public class Dto {
     public final String dtoClass;
+    public final boolean extend;
     public final Map<String, Dto> fields = new HashMap<>();
     public Dto superClass;
 
-    public Dto(String dtoClass) {
+    public Dto(String dtoClass, boolean extend) {
         this.dtoClass = dtoClass;
+        this.extend = extend;
     }
 
-    public Dto(ClassNode classNode, Map<String, ClassNode> nodes) {
-        this(classNode.name);
+    public Dto(ClassNode classNode, Map<String, ClassNode> nodes, boolean extend) {
+        this(classNode.name, extend);
         this.superClass = DtoUtils.getDto(classNode.superName, nodes);
         if (classNode.fields != null) {
             for (FieldNode field : classNode.fields) {
@@ -35,6 +37,8 @@ public class Dto {
     public JSONObject toJson() {
         JSONObject result = new JSONObject();
         result.put("class", dtoClass.replace('/', '.'));
+        if (extend)
+            result.put("extend", "true");
         if (fields.size() > 0) {
             JSONObject dtoArray = new JSONObject();
             for (Map.Entry<String, Dto> entry : fields.entrySet()) {

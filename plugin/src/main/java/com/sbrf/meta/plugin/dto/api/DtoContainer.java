@@ -8,8 +8,8 @@ import java.util.Collection;
 public class DtoContainer extends Dto {
     public final Collection<Dto> elements;
 
-    public DtoContainer(String containerClass, Collection<Dto> elements) {
-        super(containerClass);
+    public DtoContainer(String containerClass, Collection<Dto> elements, boolean extend) {
+        super(containerClass, extend);
         this.elements = elements;
     }
 

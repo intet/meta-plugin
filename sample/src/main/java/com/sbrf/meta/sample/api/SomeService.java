@@ -7,6 +7,8 @@ import com.sbt.core.amqp.annotations.Api;
 import com.sbt.core.amqp.annotations.registry.ApiMethod;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @Api
 /**
@@ -37,7 +39,7 @@ public interface SomeService {
      * @return ничего
      */
     @ApiMethod(apiName = "Сохранение пользователя", version = "0.2")
-    String saveUser(Integer id, User user);
+    List<Class<? extends String>> saveUser(Integer id, User user);
 
     /**
      * Удаление пользователей
@@ -46,5 +48,6 @@ public interface SomeService {
     @ApiMethod(apiName = "Удаление пользователя", version = "0.2")
     void deleteUser(Integer id);
 
-
+    @ApiMethod(apiName = "generics", version = "0.2")
+    List<? extends String> generics(List<? extends User> list, List<Class<? extends User>> user, List<Set<Map<String, ? extends User>>> map);
 }
