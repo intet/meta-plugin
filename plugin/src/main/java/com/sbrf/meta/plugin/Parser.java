@@ -15,8 +15,7 @@ public class Parser {
     public static ApiStorage parse(Map<GAV, File> jars, Collection<File> javaSource, Collection<File> jarSource) {
         AsmParser jarParser = new AsmParser(jars);
         ApiStorage storage = jarParser.parse();
-        if (false)
-            SourceParser.parse(javaSource, jarSource, jars, storage);
+        SourceParser.parse(javaSource, jarSource, jars, storage);
         return storage;
     }
 }

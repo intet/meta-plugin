@@ -23,6 +23,8 @@ public class Dto {
         if (classNode.fields != null) {
             for (FieldNode field : classNode.fields) {
                 String fieldClass = field.signature != null ? field.signature : field.desc;
+                if (fieldClass.length() < 2)
+                    continue;
                 fieldClass = fieldClass.substring(1, fieldClass.length() - 1);
                 Dto fieldDto = DtoUtils.getDto(fieldClass, nodes);
                 this.fields.put(field.name, fieldDto);
