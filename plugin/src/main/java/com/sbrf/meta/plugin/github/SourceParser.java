@@ -77,8 +77,8 @@ public class SourceParser {
             CompilationUnit unit = JavaParser.parse(jis);
             ApiParser parser = new ApiParser(unit, facade, storage);
             parser.parse();
-        } catch (IOException e) {
-            throw new RuntimeException(e.getMessage(), e);
+        } catch (Exception e) {
+            // throw new RuntimeException(e.getMessage(), e);
         }
     }
 }

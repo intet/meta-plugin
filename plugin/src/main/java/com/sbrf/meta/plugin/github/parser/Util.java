@@ -47,7 +47,14 @@ public class Util {
         builder.append("(");
         for (Parameter parameter : parameters) {
             ResolvedType type = facade.getType(parameter);
-            String name = type.asReferenceType().getQualifiedName();
+            String name;
+            if (type.isReferenceType()) {
+                name = type.asReferenceType().getQualifiedName();
+            } else if (type.isPrimitive()) {
+                name = type.asPrimitive().getBoxTypeQName();
+            } else {
+                continue;
+            }
             builder.append("L");
             builder.append(convertToSlash(name));
             builder.append(";");
