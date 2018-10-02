@@ -6,7 +6,7 @@ import com.sbrf.meta.plugin.asm.parser.ApiParser;
 import com.sbrf.meta.plugin.asm.parser.ApiRequestParser;
 import com.sbrf.meta.plugin.asm.util.ParserUtils;
 import com.sbrf.meta.plugin.dto.api.ApiStorage;
-import com.sbrf.meta.plugin.launch.GAV;
+import com.sbrf.meta.plugin.dto.api.GAV;
 import org.objectweb.asm.tree.ClassNode;
 
 import java.io.File;

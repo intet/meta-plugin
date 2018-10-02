@@ -1,6 +1,5 @@
 package com.sbrf.meta.plugin.dto.api;
 
-import com.sbrf.meta.plugin.launch.GAV;
 import org.json.JSONArray;
 
 import java.util.HashMap;
@@ -57,4 +56,7 @@ public class ApiStorage {
         return result;
     }
 
+    public void addComment(String api, String method, String comment) {
+        this.apiMap.get(api).addComment(method, comment);
+    }
 }

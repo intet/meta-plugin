@@ -1,10 +1,15 @@
 package com.sbrf.meta.plugin.github.parser;
 
 import com.github.javaparser.ast.Node;
+import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.body.BodyDeclaration;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
+import com.github.javaparser.ast.body.Parameter;
 import com.github.javaparser.ast.expr.AnnotationExpr;
 import com.github.javaparser.ast.expr.MemberValuePair;
+import com.github.javaparser.ast.expr.SimpleName;
+import com.github.javaparser.resolution.types.ResolvedType;
+import com.github.javaparser.symbolsolver.javaparsermodel.JavaParserFacade;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,5 +40,23 @@ public class Util {
             }
         }
         return null;
+    }
+
+    public static String getMethodSignature(SimpleName method, NodeList<Parameter> parameters, JavaParserFacade facade) {
+        StringBuilder builder = new StringBuilder(method.asString());
+        builder.append("(");
+        for (Parameter parameter : parameters) {
+            ResolvedType type = facade.getType(parameter);
+            String name = type.asReferenceType().getQualifiedName();
+            builder.append("L");
+            builder.append(convertToSlash(name));
+            builder.append(";");
+        }
+        builder.append(")");
+        return builder.toString();
+    }
+
+    public static String convertToSlash(String str) {
+        return str.replaceAll("\\.", "/");
     }
 }

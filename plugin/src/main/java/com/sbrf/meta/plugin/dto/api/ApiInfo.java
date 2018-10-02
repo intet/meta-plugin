@@ -1,7 +1,6 @@
 package com.sbrf.meta.plugin.dto.api;
 
 import com.sbrf.meta.plugin.asm.util.ParserUtils;
-import com.sbrf.meta.plugin.launch.GAV;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -56,4 +55,8 @@ public class ApiInfo {
         return result;
     }
 
+    public void addComment(String method, String comment) {
+        ApiMethodInfo methodInfo = this.methods.get(method);
+        methodInfo.addComment(comment);
+    }
 }

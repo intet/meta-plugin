@@ -4,7 +4,7 @@ import com.sbrf.meta.plugin.asm.util.DtoUtils;
 import com.sbrf.meta.plugin.asm.util.NodeUtils;
 import com.sbrf.meta.plugin.dto.api.ApiStorage;
 import com.sbrf.meta.plugin.dto.api.Dto;
-import com.sbrf.meta.plugin.launch.GAV;
+import com.sbrf.meta.plugin.dto.api.GAV;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.MethodNode;
 

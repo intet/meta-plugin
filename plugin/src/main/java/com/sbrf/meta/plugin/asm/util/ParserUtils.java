@@ -1,7 +1,7 @@
 package com.sbrf.meta.plugin.asm.util;
 
 
-import com.sbrf.meta.plugin.launch.GAV;
+import com.sbrf.meta.plugin.dto.api.GAV;
 import org.apache.commons.io.IOUtils;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.tree.ClassNode;

@@ -1,6 +1,5 @@
 package com.sbrf.meta.plugin.dto.api;
 
-import com.sbrf.meta.plugin.launch.GAV;
 import org.json.JSONObject;
 
 import java.util.Objects;

@@ -1,7 +1,7 @@
 package com.sbrf.meta.sample.request;
 
-import com.sbt.core.amqp.annotations.ApiRequest;
 import com.sbrf.meta.sample.api.SomeService;
+import com.sbt.core.amqp.annotations.ApiRequest;
 
 @ApiRequest(api = SomeService.class)
 public interface SomeServiceRequest {
