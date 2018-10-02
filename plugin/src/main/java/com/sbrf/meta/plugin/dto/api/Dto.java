@@ -22,7 +22,7 @@ public class Dto {
     public Dto(ClassNode classNode, Map<String, ClassNode> nodes, boolean extend) {
         this(classNode.name, extend);
         this.superClass = DtoUtils.getDto(classNode.superName, nodes);
-        if (classNode.fields != null) {
+        if (classNode.fields != null && !classNode.superName.equals("java/lang/Enum")) {
             for (FieldNode field : classNode.fields) {
                 String fieldClass = field.signature != null ? field.signature : field.desc;
                 if (fieldClass.length() < 2)
