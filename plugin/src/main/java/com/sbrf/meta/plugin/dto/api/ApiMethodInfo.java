@@ -12,12 +12,12 @@ public class ApiMethodInfo {
     public final String signature;
     public final String name;
     public final String version;
-    public final List<Dto> dto;
-    public final Dto result;
+    public final List<String> dto;
+    public final String result;
     public final Set<ApiCall> calls = new HashSet<>();
     private String comment;
 
-    public ApiMethodInfo(String methodName, String signature, String name, String version, List<Dto> dto, Dto result) {
+    public ApiMethodInfo(String methodName, String signature, String name, String version, List<String> dto, String result) {
         this.methodName = methodName;
         this.signature = signature;
         this.name = name;
@@ -36,11 +36,11 @@ public class ApiMethodInfo {
         result.put("name", name);
         result.put("version", version);
         JSONArray dtoArray = new JSONArray();
-        for (Dto className : dto) {
-            dtoArray.put(className.toJson());
+        for (String className : dto) {
+            dtoArray.put(className);
         }
         result.put("signature", dtoArray);
-        result.put("result", this.result.toJson());
+        result.put("result", this.result);
         JSONArray callArray = new JSONArray();
         for (ApiCall call : calls) {
             callArray.put(call.toJson());

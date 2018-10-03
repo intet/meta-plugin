@@ -32,7 +32,7 @@ public class ApiParser{
     private void parseType(ClassOrInterfaceDeclaration declaration) {
         if (Util.hasAnnotation(declaration, "Api")) {
             ResolvedReferenceTypeDeclaration typeDeclaration = facade.getTypeDeclaration(declaration);
-            String apiName = Util.convertToSlash(typeDeclaration.getQualifiedName());
+            String apiName = typeDeclaration.getQualifiedName();
 
             for (BodyDeclaration<?> member : declaration.getMembers()) {
                 if (member instanceof MethodDeclaration) {
