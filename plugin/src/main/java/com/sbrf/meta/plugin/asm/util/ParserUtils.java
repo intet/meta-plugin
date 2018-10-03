@@ -40,6 +40,8 @@ public class ParserUtils {
                 }
                 try {
                     ClassNode cn = getNode(bytes);
+                    cn.name = cn.name.replace('/', '.');
+                    cn.superName = cn.superName.replace('/', '.');
                     classes.put(cn.name, cn);
                     metaInfo.put(cn.name, gav);
                 } catch (Exception e) {

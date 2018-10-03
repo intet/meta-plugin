@@ -39,7 +39,7 @@ public class ApiInfo {
 
     public JSONObject toJson() {
         JSONObject result = new JSONObject();
-        result.put("class", apiClass.replace('/', '.'));
+        result.put("class", apiClass);
         result.put("gav", gav.toJson());
         JSONArray implArray = new JSONArray();
         for (ApiImpl impl : impls) {
