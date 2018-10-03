@@ -15,7 +15,7 @@ public class ApiCall {
 
     public JSONObject toJson() {
         JSONObject result = new JSONObject();
-        result.put("class", className.replace('/', '.'));
+        result.put("class", className);
         result.put("gav", gav.toJson());
         return result;
     }

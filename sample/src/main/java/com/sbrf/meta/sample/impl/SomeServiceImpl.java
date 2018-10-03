@@ -13,17 +13,14 @@ public class SomeServiceImpl implements SomeService {
         throw new UnsupportedOperationException();
     }
 
-    @Override
     public List<User> getAll() {
         throw new UnsupportedOperationException();
     }
 
-    @Override
     public List<Class<? extends String>> saveUser(Integer id, User user) {
         throw new UnsupportedOperationException();
     }
 
-    @Override
     public void deleteUser(Integer id) {
         throw new UnsupportedOperationException();
     }

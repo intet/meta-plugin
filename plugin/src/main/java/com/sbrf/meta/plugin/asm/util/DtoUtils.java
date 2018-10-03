@@ -4,33 +4,47 @@ import com.sbrf.meta.plugin.dto.api.Dto;
 import com.sbrf.meta.plugin.dto.api.DtoContainer;
 import org.objectweb.asm.tree.ClassNode;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class DtoUtils {
+
+    public static final String EXTENDS = "? extends ";
+    public static final String SUPER = "? super ";
+
     public static Dto getDto(String className, Map<String, ClassNode> nodes) {
         boolean extend = false;
-        if (className.startsWith("+")) {
+        boolean supper = false;
+        className = className.trim();
+        if (className.startsWith(EXTENDS)) {
             extend = true;
-            className = className.substring(1);
+            className = className.substring(EXTENDS.length());
+        }
+        if (className.startsWith(SUPER)) {
+            supper = true;
+            className = className.substring(SUPER.length());
         }
         if (className.contains("<")) {
             String container = className.substring(0, className.indexOf("<"));
             String element = className.substring(className.indexOf("<") + 1, className.lastIndexOf(">"));
-            return new DtoContainer(container, parseListDto(element, nodes), extend);
+            return new DtoContainer(container, parseListDto(element, nodes), extend, supper);
         } else if (nodes.get(className) != null) {
-            return new Dto(nodes.get(className), nodes, extend);
+            return new Dto(nodes.get(className), nodes, extend, supper);
         } else {
-            return new Dto(className, extend);
+            return new Dto(className, extend, supper);
         }
+    }
+
+    public static List<Dto> getDto(String[] type, Map<String, ClassNode> nodes) {
+        return Arrays.stream(type)
+                .map(d -> getDto(d, nodes))
+                .collect(Collectors.toList());
     }
 
     public static List<Dto> parseListDto(String signature, Map<String, ClassNode> nodes) {
         if (signature.length() == 0)
             return Collections.emptyList();
+        signature = signature + ",";
         int start = 0;
         int current = 0;
         int bracket = 0;
@@ -45,14 +59,11 @@ public class DtoUtils {
                 bracket--;
                 continue;
             }
-            if (c == ';' && bracket == 0) {
+            if (c == ',' && bracket == 0) {
                 split.add(signature.substring(start, current));
                 start = current + 1;
             }
         }
-        return split.stream()
-                .map(d -> d.startsWith("+") ? "+" + d.substring(2) : d.substring(1))
-                .map(d -> getDto(d, nodes)
-        ).collect(Collectors.toList());
+        return getDto(split.toArray(new String[]{}), nodes);
     }
 }
