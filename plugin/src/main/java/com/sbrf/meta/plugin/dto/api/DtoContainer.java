@@ -19,6 +19,7 @@ public class DtoContainer extends Dto {
         for (String element : elements) {
             elementsArray.put(element);
         }
+        result.put("class", dtoClass);
         result.put("elements", elementsArray);
         return result;
     }
