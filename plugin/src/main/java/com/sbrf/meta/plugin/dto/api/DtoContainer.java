@@ -6,9 +6,9 @@ import org.json.JSONObject;
 import java.util.Collection;
 
 public class DtoContainer extends Dto {
-    public final Collection<Dto> elements;
+    public final Collection<String> elements;
 
-    public DtoContainer(String containerClass, Collection<Dto> elements, boolean extend, boolean supper) {
+    public DtoContainer(String containerClass, Collection<String> elements, boolean extend, boolean supper) {
         super(containerClass, extend, supper);
         this.elements = elements;
     }
@@ -16,9 +16,10 @@ public class DtoContainer extends Dto {
     public JSONObject toJson() {
         JSONObject result = new JSONObject();
         JSONArray elementsArray = new JSONArray();
-        for (Dto element : elements) {
-            elementsArray.put(element.toJson());
+        for (String element : elements) {
+            elementsArray.put(element);
         }
+        result.put("class", dtoClass);
         result.put("elements", elementsArray);
         return result;
     }

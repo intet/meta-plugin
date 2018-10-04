@@ -2,6 +2,7 @@ package com.sbrf.meta.sample.impl;
 
 import com.sbrf.meta.sample.api.SomeService;
 import com.sbrf.meta.sample.dto.Person;
+import com.sbrf.meta.sample.dto.TypeUser;
 import com.sbrf.meta.sample.dto.User;
 
 import java.util.List;
@@ -13,7 +14,7 @@ public class SomeServiceImpl implements SomeService {
         throw new UnsupportedOperationException();
     }
 
-    public List<User> getAll() {
+    public List<User> getAll(TypeUser user) {
         throw new UnsupportedOperationException();
     }
 

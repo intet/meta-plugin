@@ -1,6 +1,7 @@
 package com.sbrf.meta.plugin.dto.api;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.List;
@@ -11,8 +12,9 @@ public class ApiStorage {
     private Map<String, ApiInfo> apiMap = new HashMap<>();
     //Api Request Class - ApiInfo
     private Map<String, ApiInfo> apiRequestMap = new HashMap<>();
+    private Map<String, Dto> dtoMap = new HashMap<>();
 
-    public void addApi(String apiClass, String methodName, String desc, GAV gav, String name, String version, List<Dto> dto, Dto result) {
+    public void addApi(String apiClass, String methodName, String desc, GAV gav, String name, String version, List<String> dto, String result) {
         ApiInfo apiInfo = this.apiMap.get(apiClass);
         if (apiInfo == null) {
             apiInfo = new ApiInfo(apiClass, gav);
@@ -48,11 +50,19 @@ public class ApiStorage {
         return apiRequestMap.get(apiRequestClass).apiClass;
     }
 
-    public JSONArray toJson() {
-        JSONArray result = new JSONArray();
+    public JSONObject toJson() {
+        JSONObject result = new JSONObject();
+        JSONArray api = new JSONArray();
         for (ApiInfo apiInfo : apiMap.values()) {
-            result.put(apiInfo.toJson());
+            api.put(apiInfo.toJson());
         }
+        result.put("api", api);
+        JSONObject dto = new JSONObject();
+
+        for (Map.Entry<String, Dto> entry : dtoMap.entrySet()) {
+            dto.put(entry.getKey(), entry.getValue().toJson());
+        }
+        result.put("dto", dto);
         return result;
     }
 
@@ -61,5 +71,13 @@ public class ApiStorage {
         if (apiInfo == null)
             return;
         apiInfo.addComment(method, comment);
+    }
+
+    public boolean hasDto(String className) {
+        return dtoMap.containsKey(className);
+    }
+
+    public void addDto(String className, Dto dto) {
+        dtoMap.put(className, dto);
     }
 }

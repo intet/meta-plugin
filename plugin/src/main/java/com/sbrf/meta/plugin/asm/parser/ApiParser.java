@@ -3,7 +3,6 @@ package com.sbrf.meta.plugin.asm.parser;
 import com.sbrf.meta.plugin.asm.util.DtoUtils;
 import com.sbrf.meta.plugin.asm.util.NodeUtils;
 import com.sbrf.meta.plugin.dto.api.ApiStorage;
-import com.sbrf.meta.plugin.dto.api.Dto;
 import com.sbrf.meta.plugin.dto.api.GAV;
 import org.apache.bcel.classfile.Utility;
 import org.objectweb.asm.tree.ClassNode;
@@ -27,8 +26,8 @@ public class ApiParser {
                     continue;
                 Map<String, String> params = NodeUtils.getAnnotationParams(mn, ANNOTATION_METHOD_NAME);
                 String signature = mn.signature != null ? mn.signature : mn.desc;
-                List<Dto> dto = getSignature(signature, nodes);
-                Dto result = getResult(signature, nodes);
+                List<String> dto = getSignature(signature, nodes, storage);
+                String result = getResult(signature, nodes, storage);
                 GAV gav = metaInfo.get(cn.name);
                 storage.addApi(cn.name, mn.name, mn.desc, gav,
                         params.get("apiName"), params.get("version"), dto, result);
@@ -37,14 +36,14 @@ public class ApiParser {
         return storage;
     }
 
-    private static Dto getResult(String signature, Map<String, ClassNode> nodes) {
+    private static String getResult(String signature, Map<String, ClassNode> nodes, ApiStorage storage) {
         String type = Utility.methodSignatureReturnType(signature);
-        return DtoUtils.getDto(new String[]{type}, nodes).get(0);
+        return DtoUtils.getDto(new String[]{type}, nodes, storage).get(0);
     }
 
-    private static List<Dto> getSignature(String signature, Map<String, ClassNode> nodes) {
+    private static List<String> getSignature(String signature, Map<String, ClassNode> nodes, ApiStorage storage) {
         String[] types = Utility.methodSignatureArgumentTypes(signature);
-        return DtoUtils.getDto(types, nodes);
+        return DtoUtils.getDto(types, nodes, storage);
     }
 
 }
