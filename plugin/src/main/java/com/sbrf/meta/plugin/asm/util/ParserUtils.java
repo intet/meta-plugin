@@ -42,6 +42,11 @@ public class ParserUtils {
                     ClassNode cn = getNode(bytes);
                     cn.name = cn.name.replace('/', '.');
                     cn.superName = cn.superName.replace('/', '.');
+                    if (cn.interfaces != null) {
+                        for (int i = 0; i < cn.interfaces.size(); i++) {
+                            cn.interfaces.set(i, cn.interfaces.get(i).replace('/', '.'));
+                        }
+                    }
                     classes.put(cn.name, cn);
                     metaInfo.put(cn.name, gav);
                 } catch (Exception e) {
