@@ -59,6 +59,8 @@ public class ParserMojo extends AbstractMojo {
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
+        getLog().info("Finish parse");
+        getLog().info(json);
     }
 
     private void collectSource() {
