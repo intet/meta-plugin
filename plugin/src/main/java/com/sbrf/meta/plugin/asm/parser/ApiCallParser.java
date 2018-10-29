@@ -26,7 +26,7 @@ public class ApiCallParser {
         for (AbstractInsnNode ain : mn.instructions.toArray()) {
             if (ain.getType() == AbstractInsnNode.METHOD_INSN) {
                 MethodInsnNode methodNode = (MethodInsnNode) ain;
-                String owner = methodNode.owner;
+                String owner = methodNode.owner.replace('/', '.');
                 String apiClass = checkImplement(owner, storage, nodes);
                 if (apiClass != null) {
                     storage.addCall(apiClass, className, gav, methodNode.name, methodNode.desc);
