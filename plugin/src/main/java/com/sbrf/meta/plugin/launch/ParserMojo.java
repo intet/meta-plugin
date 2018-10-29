@@ -14,7 +14,7 @@ import org.apache.maven.project.MavenProject;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Collections;
+import java.util.Collection;
 import java.util.Map;
 
 import static org.twdata.maven.mojoexecutor.MojoExecutor.*;
@@ -44,12 +44,13 @@ public class ParserMojo extends AbstractMojo {
         Map<GAV, File> jars = FileUtil.getJars(this.project);
 
         //Отключаем временно парсинг исходников
-        //collectSource();
-        //Collection<File> source = FileUtil.collectFileFromDir(new File(sourceDir));
-        //Collection<File> jarSource = FileUtil.getDependencySource(project);
+        //    collectSource();
+        Collection<File> source = FileUtil.collectFileFromDir(new File(sourceDir));
+        Collection<File> jarSource = FileUtil.getDependencySource(project);
+        // Collection<File> jarSource = Collections.EMPTY_SET;
+        //source.addAll(FileUtil.getDependencyModule(project));
 
-        //ApiStorage storage = Parser.parse(jars, source, jarSource);
-        ApiStorage storage = Parser.parse(jars, Collections.EMPTY_SET, Collections.EMPTY_SET);
+        ApiStorage storage = Parser.parse(jars, source, jarSource);
         saveToFile(storage.toJson().toString());
     }
 
