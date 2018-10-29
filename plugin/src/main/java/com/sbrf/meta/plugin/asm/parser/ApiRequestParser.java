@@ -23,7 +23,7 @@ public class ApiRequestParser {
                 if (params.get("api") == null)
                     continue;
                 String apiClass = "" + params.get("api");
-                apiClass = apiClass.substring(1, apiClass.length() - 1);
+                apiClass = apiClass.substring(1, apiClass.length() - 1).replace('/', '.');
                 if (storage.containsApi(apiClass))
                     storage.addRequest(apiClass, cn.name);
             }
