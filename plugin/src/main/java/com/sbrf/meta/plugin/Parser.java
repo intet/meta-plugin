@@ -11,7 +11,12 @@ import java.util.Map;
 
 public class Parser {
 
-
+    /**
+     * @param jars       jar с бинарниками
+     * @param javaSource java class с исходными кодами, которые лежат в текущем проекте
+     * @param jarSource  jar с исходиниками для всех проектов кроме текущего
+     * @return Storage где лежит результат работы парсеров
+     */
     public static ApiStorage parse(Map<GAV, File> jars, Collection<File> javaSource, Collection<File> jarSource) {
         AsmParser jarParser = new AsmParser(jars);
         ApiStorage storage = jarParser.parse();

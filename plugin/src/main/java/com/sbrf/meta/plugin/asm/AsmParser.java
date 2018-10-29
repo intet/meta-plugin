@@ -13,6 +13,9 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Парсинг бинарных кодов
+ */
 public class AsmParser {
     private final Map<String, ClassNode> nodes;
     private final Map<String, GAV> metaInfo;

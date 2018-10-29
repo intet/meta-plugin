@@ -58,21 +58,5 @@ public class FileUtil {
 
         }
         return result;
-    }/*
-    static Collection<File> getDependencyModule(MavenProject project) {
-        Set<File> result = new HashSet<>();
-        for (Artifact jarA : project.getArtifacts()) {
-            if(!(jarA.getGroupId().startsWith("com.sbt")||jarA.getGroupId().startsWith("ru")))
-                continue;
-            File jar = jarA.getFile();
-            if (jar == null) continue;
-            String path = jar.getPath();
-            File source = new File(path.substring(0, path.length() - 4) + "-sources.jar");
-            if (!source.exists()) continue;
-            result.add(source);
-
-        }
-        return result;
-    }*/
-
+    }
 }

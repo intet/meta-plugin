@@ -1,6 +1,5 @@
 package com.sbrf.meta.plugin.dto.api;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -52,9 +51,9 @@ public class ApiStorage {
 
     public JSONObject toJson() {
         JSONObject result = new JSONObject();
-        JSONArray api = new JSONArray();
+        JSONObject api = new JSONObject();
         for (ApiInfo apiInfo : apiMap.values()) {
-            api.put(apiInfo.toJson());
+            api.put(apiInfo.apiClass, apiInfo.toJson());
         }
         result.put("api", api);
         JSONObject dto = new JSONObject();

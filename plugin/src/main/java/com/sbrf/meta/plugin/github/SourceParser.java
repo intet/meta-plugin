@@ -20,6 +20,9 @@ import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+/**
+ * Парсинг и поиск комментариев
+ */
 public class SourceParser {
 
 

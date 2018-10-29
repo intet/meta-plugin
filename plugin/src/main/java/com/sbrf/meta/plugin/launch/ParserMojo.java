@@ -43,12 +43,9 @@ public class ParserMojo extends AbstractMojo {
         getLog().info("Start parse");
         Map<GAV, File> jars = FileUtil.getJars(this.project);
 
-        //Отключаем временно парсинг исходников
-        //    collectSource();
+        collectSource();
         Collection<File> source = FileUtil.collectFileFromDir(new File(sourceDir));
         Collection<File> jarSource = FileUtil.getDependencySource(project);
-        // Collection<File> jarSource = Collections.EMPTY_SET;
-        //source.addAll(FileUtil.getDependencyModule(project));
 
         ApiStorage storage = Parser.parse(jars, source, jarSource);
         saveToFile(storage.toJson().toString());
