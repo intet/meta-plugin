@@ -70,7 +70,7 @@ public class ApiStorage {
         ApiInfo apiInfo = this.apiMap.get(api);
         if (apiInfo == null)
             return;
-        apiInfo.addComment(method, comment);
+        apiInfo.addComment(method, "/**" + comment + "*/");
     }
 
     public boolean hasDto(String className) {
