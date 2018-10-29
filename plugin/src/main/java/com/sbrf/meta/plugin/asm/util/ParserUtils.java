@@ -19,6 +19,13 @@ public class ParserUtils {
     public static void readJar(File jarFile, GAV gav, Map<String, ClassNode> classes, Map<String, GAV> metaInfo) {
         try {
             JarFile jar = new JarFile(jarFile);
+            try {
+                String module = jar.getManifest().getMainAttributes().getValue("module");
+                if (module != null)
+                    gav.module = module;
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
             Stream<JarEntry> str = jar.stream();
             str.forEach(z -> readJar(jar, z, gav, classes, metaInfo));
             jar.close();
