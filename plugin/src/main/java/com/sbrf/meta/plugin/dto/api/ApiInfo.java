@@ -19,9 +19,10 @@ public class ApiInfo {
         this.gav = gav;
     }
 
-    public void addMethod(String methodName, String desc, String name, String version, List<String> dto, String result) {
+    public void addMethod(String methodName, String desc, String name, String version,
+                          List<String> input, String output, List<String> throwsList) {
         this.methods.put(ParserUtils.getMethodSignature(methodName, desc),
-                new ApiMethodInfo(methodName, desc, name, version, dto, result));
+                new ApiMethodInfo(methodName, desc, name, version, input, output, throwsList));
     }
 
     public void addImpl(String implClass, GAV gav) {

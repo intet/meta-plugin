@@ -13,13 +13,14 @@ public class ApiStorage {
     private Map<String, ApiInfo> apiRequestMap = new HashMap<>();
     private Map<String, Dto> dtoMap = new HashMap<>();
 
-    public void addApi(String apiClass, String methodName, String desc, GAV gav, String name, String version, List<String> dto, String result) {
+    public void addApi(String apiClass, String methodName, String desc, GAV gav, String name, String version,
+                       List<String> input, String output, List<String> throwsList) {
         ApiInfo apiInfo = this.apiMap.get(apiClass);
         if (apiInfo == null) {
             apiInfo = new ApiInfo(apiClass, gav);
             this.apiMap.put(apiInfo.apiClass, apiInfo);
         }
-        apiInfo.addMethod(methodName, desc, name, version, dto, result);
+        apiInfo.addMethod(methodName, desc, name, version, input, output, throwsList);
     }
 
     public boolean containsApi(String api) {

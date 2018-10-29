@@ -23,7 +23,7 @@ public interface SomeService {
      * @return Пользователь
      */
     @ApiMethod(apiName = "Получение пользователя", version = "2.4")
-    Person getUser(Integer id);
+    Person getUser(Integer id) throws RuntimeException;
     /**
      * Получение пользователей
      *
