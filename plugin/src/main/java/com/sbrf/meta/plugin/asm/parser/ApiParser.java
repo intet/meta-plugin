@@ -26,19 +26,37 @@ public class ApiParser {
             if (!NodeUtils.hasAnnotation(cn, ANNOTATION_NAME))
                 continue;
             for (MethodNode mn : cn.methods) {
-                if (!NodeUtils.hasAnnotation(mn, ANNOTATION_METHOD_NAME))
-                    continue;
-                Map<String, String> params = NodeUtils.getAnnotationParams(mn, ANNOTATION_METHOD_NAME);
-                String signature = mn.signature != null ? mn.signature : mn.desc;
-                List<String> input = getSignature(signature, nodes, storage);
-                List<String> exceptions = getExceptions(mn.exceptions, nodes, storage);
-                String output = getResult(signature, nodes, storage);
-                GAV gav = metaInfo.get(cn.name);
-                storage.addApi(cn.name, mn.name, mn.desc, gav,
-                        params.get("apiName"), params.get("version"), input, output, exceptions);
+                findMethod(nodes, metaInfo, storage, cn, mn);
             }
         }
         return storage;
+    }
+
+    private static void findMethod(Map<String, ClassNode> nodes, Map<String, GAV> metaInfo, ApiStorage storage, ClassNode cn, MethodNode mn) {
+        String signature = mn.signature != null ? mn.signature : mn.desc;
+        List<String> input = getSignature(signature, nodes, storage);
+        List<String> exceptions = getExceptions(mn.exceptions, nodes, storage);
+        String output = getResult(signature, nodes, storage);
+        GAV gav = metaInfo.get(cn.name);
+
+        String logicalName;
+        String versionCode;
+        if (!NodeUtils.hasAnnotation(mn, ANNOTATION_METHOD_NAME)) {
+            logicalName = mn.name;
+            versionCode = "nono";
+        } else {
+            Map<String, String> params = NodeUtils.getAnnotationParams(mn, ANNOTATION_METHOD_NAME);
+            if (params.get("shortNameRu") != null) {
+                logicalName = params.get("shortNameRu");
+                versionCode = params.get("major") + "." + params.get("minor");
+            } else {
+                logicalName = params.get("apiName");
+                versionCode = params.get("version");
+            }
+        }
+
+        storage.addApi(cn.name, mn.name, mn.desc, gav,
+                logicalName, versionCode, input, output, exceptions);
     }
 
     private static String getResult(String signature, Map<String, ClassNode> nodes, ApiStorage storage) {
