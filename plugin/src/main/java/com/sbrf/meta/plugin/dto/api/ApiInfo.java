@@ -1,6 +1,9 @@
 package com.sbrf.meta.plugin.dto.api;
 
 import com.sbrf.meta.plugin.asm.util.ParserUtils;
+import com.sbrf.meta.plugin.dto.xml.ApiType;
+import com.sbrf.meta.plugin.dto.xml.ImplementationsType;
+import com.sbrf.meta.plugin.dto.xml.MethodsType;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -19,10 +22,10 @@ public class ApiInfo {
         this.gav = gav;
     }
 
-    public void addMethod(String methodName, String desc, String name, String version,
+    public void addMethod(String logicalName, String technicalName, String desc, String version,
                           List<String> input, String output, List<String> throwsList) {
-        this.methods.put(ParserUtils.getMethodSignature(methodName, desc),
-                new ApiMethodInfo(methodName, desc, name, version, input, output, throwsList));
+        this.methods.put(ParserUtils.getMethodSignature(technicalName, desc),
+                new ApiMethodInfo(logicalName, technicalName, desc, version, input, output, throwsList));
     }
 
     public void addImpl(String implClass, GAV gav) {
@@ -60,5 +63,24 @@ public class ApiInfo {
         ApiMethodInfo methodInfo = this.methods.get(method);
         if (methodInfo == null) return;
         methodInfo.addComment(comment);
+    }
+
+    public ApiType toXml() {
+        ApiType result = new ApiType();
+        result.setClazz(apiClass);
+        result.setGav(gav.toXml());
+        ImplementationsType implArray = new ImplementationsType();
+        for (ApiImpl impl : impls) {
+            implArray.getImplementation().add(impl.toXml());
+        }
+        result.setImplementations(implArray);
+
+        MethodsType methodArray = new MethodsType();
+        for (ApiMethodInfo method : methods.values()) {
+            methodArray.getMethod().add(method.toXml());
+        }
+        result.setMethods(methodArray);
+        return result;
+
     }
 }

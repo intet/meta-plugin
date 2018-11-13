@@ -3,6 +3,7 @@ package com.sbrf.meta.plugin.asm.util;
 import com.sbrf.meta.plugin.dto.api.ApiStorage;
 import com.sbrf.meta.plugin.dto.api.Dto;
 import com.sbrf.meta.plugin.dto.api.DtoContainer;
+import com.sbrf.meta.plugin.dto.xml.ClassType;
 import org.objectweb.asm.tree.ClassNode;
 
 import java.util.*;
@@ -74,5 +75,18 @@ public class DtoUtils {
             }
         }
         return getDto(split.toArray(new String[]{}), nodes, storage);
+    }
+
+    public static ClassType getClassType(String className) {
+        ClassType classType = new ClassType();
+        classType.setType(className.replace("[]", ""));
+        classType.setIsArray(className.endsWith("[]"));
+        return classType;
+    }
+
+    public static ClassType getClassType(String dtoClass, String superClass) {
+        ClassType classType = DtoUtils.getClassType(dtoClass);
+        classType.setSuper(superClass);
+        return classType;
     }
 }

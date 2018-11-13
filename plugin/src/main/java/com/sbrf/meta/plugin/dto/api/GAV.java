@@ -1,5 +1,6 @@
 package com.sbrf.meta.plugin.dto.api;
 
+import com.sbrf.meta.plugin.dto.xml.GavType;
 import org.apache.maven.artifact.Artifact;
 import org.json.JSONObject;
 
@@ -44,6 +45,15 @@ public class GAV {
         result.put("artifact", artifact);
         result.put("version", version);
         result.put("module", module);
+        return result;
+    }
+
+    public GavType toXml() {
+        GavType result = new GavType();
+        result.setArtifact(artifact);
+        result.setGroup(group);
+        result.setModule(module);
+        result.setVersion(version);
         return result;
     }
 }

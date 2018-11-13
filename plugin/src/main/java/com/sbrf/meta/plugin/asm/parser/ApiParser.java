@@ -55,8 +55,8 @@ public class ApiParser {
             }
         }
 
-        storage.addApi(cn.name, mn.name, mn.desc, gav,
-                logicalName, versionCode, input, output, exceptions);
+        storage.addApi(cn.name, logicalName, mn.name, mn.desc, gav,
+                versionCode, input, output, exceptions);
     }
 
     private static String getResult(String signature, Map<String, ClassNode> nodes, ApiStorage storage) {

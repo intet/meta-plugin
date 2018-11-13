@@ -48,7 +48,7 @@ public class ParserMojo extends AbstractMojo {
         Collection<File> jarSource = FileUtil.getDependencySource(project);
 
         ApiStorage storage = Parser.parse(jars, source, jarSource);
-        saveToFile(storage.toJson().toString());
+        saveToFile(storage.toXml().toString());
     }
 
     private void saveToFile(String json) {

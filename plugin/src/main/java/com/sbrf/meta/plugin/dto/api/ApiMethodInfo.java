@@ -1,5 +1,9 @@
 package com.sbrf.meta.plugin.dto.api;
 
+import com.sbrf.meta.plugin.dto.xml.InputType;
+import com.sbrf.meta.plugin.dto.xml.InvocationsType;
+import com.sbrf.meta.plugin.dto.xml.MethodType;
+import com.sbrf.meta.plugin.dto.xml.ThrowsType;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -7,10 +11,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static com.sbrf.meta.plugin.asm.util.DtoUtils.getClassType;
+
 public class ApiMethodInfo {
-    public final String methodName;
+    public final String technicalName;
     public final String signature;
-    public final String name;
+    public final String logicalName;
     public final String version;
     public final List<String> input;
     public final List<String> throwsList;
@@ -18,11 +24,11 @@ public class ApiMethodInfo {
     public final Set<ApiCall> invocations = new HashSet<>();
     private String comment;
 
-    public ApiMethodInfo(String methodName, String signature, String name, String version,
+    public ApiMethodInfo(String logicalName, String technicalName, String signature, String version,
                          List<String> input, String output, List<String> throwsList) {
-        this.methodName = methodName;
+        this.technicalName = technicalName;
+        this.logicalName = logicalName;
         this.signature = signature;
-        this.name = name;
         this.version = version;
         this.input = input;
         this.output = output;
@@ -35,8 +41,8 @@ public class ApiMethodInfo {
 
     public JSONObject toJson() {
         JSONObject result = new JSONObject();
-        result.put("method", methodName);
-        result.put("name", name);
+        result.put("logicalName", logicalName);
+        result.put("technicalName", technicalName);
         result.put("version", version);
         JSONArray inputArray = new JSONArray();
         for (String className : input) {
@@ -61,4 +67,31 @@ public class ApiMethodInfo {
     public void addComment(String comment) {
         this.comment = comment;
     }
+
+    public MethodType toXml() {
+        MethodType result = new MethodType();
+        result.setLogicalName(logicalName);
+        result.setTechnicalName(technicalName);
+        result.setVersion(version);
+
+        InputType inputArray = new InputType();
+        for (String className : input) {
+            inputArray.getParameter().add(getClassType(className));
+        }
+        result.setInput(inputArray);
+        ThrowsType throwsArray = new ThrowsType();
+        for (String throwItem : throwsList) {
+            throwsArray.getThrows().add(throwItem);
+        }
+        result.setThrows(throwsArray);
+        result.setOutput(getClassType(this.output));
+        InvocationsType callArray = new InvocationsType();
+        for (ApiCall call : invocations) {
+            callArray.getInvocation().add(call.toXml());
+        }
+        result.setInvocations(callArray);
+        result.setComment(comment);
+        return result;
+    }
+
 }

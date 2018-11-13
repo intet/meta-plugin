@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:ns1="http://www.sberbank.ru/meta" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://www.sberbank.ru/meta" elementFormDefault="qualified"
+           attributeFormDefault="unqualified">
+    <xs:element name="root" type="ns1:rootType"/>
+    <xs:complexType name="rootType">
+        <xs:sequence>
+            <xs:element type="ns1:apisType" name="apis"/>
+            <xs:element type="ns1:dtosType" name="dtos"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="apisType">
+        <xs:annotation>
+            <xs:documentation>Контейнер информации об Api</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element type="ns1:apiType" name="api" maxOccurs="unbounded" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="apiType">
+        <xs:annotation>
+            <xs:documentation>Информация об Api</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element type="xs:string" name="class">
+                <xs:annotation>
+                    <xs:documentation>Класс интерфейса Api</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="ns1:methodsType" name="methods">
+                <xs:annotation>
+                    <xs:documentation>Методы Api</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="ns1:implementationsType" name="implementations">
+                <xs:annotation>
+                    <xs:documentation>Имплементации Api</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="ns1:gavType" name="gav">
+                <xs:annotation>
+                    <xs:documentation>GAV параметры интерфейса Api</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="xs:string" name="comment">
+                <xs:annotation>
+                    <xs:documentation>JavaDoc комментарий</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="methodsType">
+        <xs:annotation>
+            <xs:documentation>Контейнер информации об методах Api</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element type="ns1:methodType" name="method" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="methodType">
+        <xs:annotation>
+            <xs:documentation>Метод Api</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element type="xs:string" name="logicalName">
+                <xs:annotation>
+                    <xs:documentation>Логическое название метода Api</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="xs:string" name="technicalName">
+                <xs:annotation>
+                    <xs:documentation>Физическое название метода Api</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="ns1:inputType" name="input">
+                <xs:annotation>
+                    <xs:documentation>Входящие параметры Api</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="ns1:classType" name="output">
+                <xs:annotation>
+                    <xs:documentation>Результат Api</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="xs:string" name="version">
+                <xs:annotation>
+                    <xs:documentation>Версия метода Api</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="ns1:invocationsType" name="invocations">
+                <xs:annotation>
+                    <xs:documentation>Вызывовы метода Api</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="ns1:throwsType" name="throws">
+                <xs:annotation>
+                    <xs:documentation>Выбрашиваемые исключения Api</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="xs:string" name="comment">
+                <xs:annotation>
+                    <xs:documentation>JavaDoc комментарий</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="inputType">
+        <xs:sequence>
+            <xs:element name="parameter" type="ns1:classType" maxOccurs="unbounded" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Класс параметра Api</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="invocationsType">
+        <xs:sequence>
+            <xs:element type="ns1:invocationType" name="invocation" maxOccurs="unbounded" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Класс вызывающий метод Api</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="invocationType">
+        <xs:annotation>
+            <xs:documentation>Информация о вызове метода Api</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="class" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Класс вызывающий метод Api</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="ns1:gavType" name="gav">
+                <xs:annotation>
+                    <xs:documentation>GAV параметры класса вызывающего метод Api</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="throwsType">
+        <xs:sequence>
+            <xs:element type="xs:string" name="throws" maxOccurs="unbounded" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Класс исключения метод Api</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="gavType">
+        <xs:sequence>
+            <xs:element type="xs:string" name="artifact"/>
+            <xs:element type="xs:string" name="module"/>
+            <xs:element type="xs:string" name="version"/>
+            <xs:element type="xs:string" name="group"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="implementationsType">
+        <xs:sequence>
+            <xs:element type="ns1:implementationType" name="implementation" maxOccurs="unbounded" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="implementationType">
+        <xs:sequence>
+            <xs:element type="xs:string" name="class"/>
+            <xs:element type="ns1:gavType" name="gav"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="dtosType">
+        <xs:sequence>
+            <xs:element type="ns1:dtoType" name="dto" maxOccurs="unbounded" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="dtoType">
+        <xs:sequence>
+            <xs:element type="ns1:classType" name="class">
+                <xs:annotation>
+                    <xs:documentation>Класс Dto</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="ns1:fieldsType" name="fields">
+                <xs:annotation>
+                    <xs:documentation>Поля DTO</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="fieldsType">
+        <xs:sequence>
+            <xs:element type="ns1:fieldType" name="field" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="fieldType">
+        <xs:sequence>
+            <xs:element type="xs:string" name="name">
+                <xs:annotation>
+                    <xs:documentation>Название поля</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="ns1:classType" name="class">
+                <xs:annotation>
+                    <xs:documentation>Класс поля</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="xs:boolean" name="static" default="false">
+                <xs:annotation>
+                    <xs:documentation>Является статическим полем</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="xs:boolean" name="final" default="false">
+                <xs:annotation>
+                    <xs:documentation>Является final полем</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="access">
+                <xs:annotation>
+                    <xs:documentation>Модификатор доступа</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="public"/>
+                        <xs:enumeration value="protected"/>
+                        <xs:enumeration value="default"/>
+                        <xs:enumeration value="private"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="typesType">
+        <xs:sequence>
+            <xs:element type="xs:string" name="type" maxOccurs="unbounded" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="classType">
+        <xs:sequence>
+            <xs:element type="xs:string" name="type">
+                <xs:annotation>
+                    <xs:documentation>Класс поля</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="xs:boolean" name="isArray" default="false" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Является ли массивом</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="xs:string" name="super" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Класс от которого унаследован класс</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="ns1:typesType" name="types" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Типы для generic класс</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

@@ -1,5 +1,8 @@
 package com.sbrf.meta.plugin.dto.api;
 
+import com.sbrf.meta.plugin.dto.xml.ApisType;
+import com.sbrf.meta.plugin.dto.xml.DtosType;
+import com.sbrf.meta.plugin.dto.xml.RootType;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -13,14 +16,14 @@ public class ApiStorage {
     private Map<String, ApiInfo> apiRequestMap = new HashMap<>();
     private Map<String, Dto> dtoMap = new HashMap<>();
 
-    public void addApi(String apiClass, String methodName, String desc, GAV gav, String name, String version,
+    public void addApi(String apiClass, String logicalName, String technicalName, String desc, GAV gav, String version,
                        List<String> input, String output, List<String> throwsList) {
         ApiInfo apiInfo = this.apiMap.get(apiClass);
         if (apiInfo == null) {
             apiInfo = new ApiInfo(apiClass, gav);
             this.apiMap.put(apiInfo.apiClass, apiInfo);
         }
-        apiInfo.addMethod(methodName, desc, name, version, input, output, throwsList);
+        apiInfo.addMethod(logicalName, technicalName, desc, version, input, output, throwsList);
     }
 
     public boolean containsApi(String api) {
@@ -66,6 +69,22 @@ public class ApiStorage {
         return result;
     }
 
+    public RootType toXml() {
+        RootType result = new RootType();
+        ApisType api = new ApisType();
+        for (ApiInfo apiInfo : apiMap.values()) {
+            api.getApi().add(apiInfo.toXml());
+        }
+        result.setApis(api);
+
+
+        DtosType dto = new DtosType();
+        for (Map.Entry<String, Dto> entry : dtoMap.entrySet()) {
+            dto.getDto().add(entry.getValue().toXml());
+        }
+        result.setDtos(dto);
+        return result;
+    }
     public void addComment(String api, String method, String comment) {
         ApiInfo apiInfo = this.apiMap.get(api);
         if (apiInfo == null)
