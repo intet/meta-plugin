@@ -1,13 +1,17 @@
 package com.sbrf.meta.plugin.dto.api;
 
 import com.sbrf.meta.plugin.asm.util.ParserUtils;
-import com.sbrf.meta.plugin.dto.xml.ApiType;
-import com.sbrf.meta.plugin.dto.xml.ImplementationsType;
-import com.sbrf.meta.plugin.dto.xml.MethodsType;
+import com.sbrf.meta.plugin.dto.xml.ApiDeclarationType;
+import com.sbrf.meta.plugin.dto.xml.ApiImplementationType;
+import com.sbrf.meta.plugin.dto.xml.ApiInvocationType;
+import com.sbrf.meta.plugin.dto.xml.ModuleType;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.*;
+
+import static com.sbrf.meta.plugin.asm.util.DtoUtils.addDependencies;
+import static com.sbrf.meta.plugin.asm.util.DtoUtils.getModule;
 
 public class ApiInfo {
     public final String apiClass;
@@ -65,22 +69,34 @@ public class ApiInfo {
         methodInfo.addComment(comment);
     }
 
-    public ApiType toXml() {
-        ApiType result = new ApiType();
-        result.setClazz(apiClass);
-        result.setGav(gav.toXml());
-        ImplementationsType implArray = new ImplementationsType();
-        for (ApiImpl impl : impls) {
-            implArray.getImplementation().add(impl.toXml());
-        }
-        result.setImplementations(implArray);
-
-        MethodsType methodArray = new MethodsType();
+    public void toModule(Map<GAV, ModuleType> moduleMap, Map<String, Dto> dtoMap, Map<GAV, Set<GAV>> dependencyMap) {
+        ApiDeclarationType declarationType = new ApiDeclarationType();
+        declarationType.setClazz(apiClass);
+        declarationType.setGav(gav.toXml());
         for (ApiMethodInfo method : methods.values()) {
-            methodArray.getMethod().add(method.toXml());
-        }
-        result.setMethods(methodArray);
-        return result;
+            declarationType.getMethod().add(method.toXml());
+            addDependencies(gav, dtoMap, dependencyMap, method.output);
+            for (String input : method.input) {
+                addDependencies(gav, dtoMap, dependencyMap, input);
+            }
 
+            for (ApiCall call : method.invocations) {
+                ApiInvocationType apiCall = new ApiInvocationType();
+                apiCall.setApiClass(apiClass);
+                apiCall.setClazz(call.className);
+                apiCall.setGav(call.gav.toXml());
+                getModule(moduleMap, call.gav).getApiInvocationType().add(apiCall);
+            }
+        }
+        getModule(moduleMap, gav).getApiDeclaration().add(declarationType);
+
+        for (ApiImpl impl : impls) {
+            ApiImplementationType implementationType = new ApiImplementationType();
+            implementationType.setApiClass(apiClass);
+            implementationType.setClazz(impl.className);
+            implementationType.setGav(impl.gav.toXml());
+            getModule(moduleMap, impl.gav).getApiImplementation().add(implementationType);
+        }
     }
+
 }

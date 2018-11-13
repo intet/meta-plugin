@@ -1,6 +1,5 @@
 package com.sbrf.meta.plugin.dto.api;
 
-import com.sbrf.meta.plugin.dto.xml.InvocationType;
 import org.json.JSONObject;
 
 import java.util.Objects;
@@ -35,10 +34,4 @@ public class ApiCall {
         return Objects.hash(className, gav);
     }
 
-    public InvocationType toXml() {
-        InvocationType result = new InvocationType();
-        result.setClazz(className);
-        result.setGav(gav.toXml());
-        return result;
-    }
 }

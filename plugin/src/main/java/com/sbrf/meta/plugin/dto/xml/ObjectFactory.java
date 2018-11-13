@@ -1,10 +1,7 @@
 
 package com.sbrf.meta.plugin.dto.xml;
 
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.annotation.XmlElementDecl;
 import javax.xml.bind.annotation.XmlRegistry;
-import javax.xml.namespace.QName;
 
 
 /**
@@ -24,7 +21,6 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _Root_QNAME = new QName("http://www.sberbank.ru/meta", "root");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: com.sbrf.meta.plugin.dto.xml
@@ -34,67 +30,43 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link RootType }
+     * Create an instance of {@link Root }
      * 
      */
-    public RootType createRootType() {
-        return new RootType();
+    public Root createRoot() {
+        return new Root();
     }
 
     /**
-     * Create an instance of {@link DtosType }
+     * Create an instance of {@link ModuleType }
      * 
      */
-    public DtosType createDtosType() {
-        return new DtosType();
+    public ModuleType createModuleType() {
+        return new ModuleType();
     }
 
     /**
-     * Create an instance of {@link InvocationsType }
+     * Create an instance of {@link ApiImplementationType }
      * 
      */
-    public InvocationsType createInvocationsType() {
-        return new InvocationsType();
+    public ApiImplementationType createApiImplementationType() {
+        return new ApiImplementationType();
     }
 
     /**
-     * Create an instance of {@link ImplementationsType }
+     * Create an instance of {@link ApiDeclarationType }
      * 
      */
-    public ImplementationsType createImplementationsType() {
-        return new ImplementationsType();
+    public ApiDeclarationType createApiDeclarationType() {
+        return new ApiDeclarationType();
     }
 
     /**
-     * Create an instance of {@link ApisType }
+     * Create an instance of {@link ApiInvocationType }
      * 
      */
-    public ApisType createApisType() {
-        return new ApisType();
-    }
-
-    /**
-     * Create an instance of {@link MethodsType }
-     * 
-     */
-    public MethodsType createMethodsType() {
-        return new MethodsType();
-    }
-
-    /**
-     * Create an instance of {@link ImplementationType }
-     * 
-     */
-    public ImplementationType createImplementationType() {
-        return new ImplementationType();
-    }
-
-    /**
-     * Create an instance of {@link InvocationType }
-     * 
-     */
-    public InvocationType createInvocationType() {
-        return new InvocationType();
+    public ApiInvocationType createApiInvocationType() {
+        return new ApiInvocationType();
     }
 
     /**
@@ -154,14 +126,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ApiType }
-     * 
-     */
-    public ApiType createApiType() {
-        return new ApiType();
-    }
-
-    /**
      * Create an instance of {@link FieldsType }
      * 
      */
@@ -175,15 +139,6 @@ public class ObjectFactory {
      */
     public ClassType createClassType() {
         return new ClassType();
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link RootType }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://www.sberbank.ru/meta", name = "root")
-    public JAXBElement<RootType> createRoot(RootType value) {
-        return new JAXBElement<RootType>(_Root_QNAME, RootType.class, null, value);
     }
 
 }

@@ -6,20 +6,21 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for dtosType complex type.
+ * <p>Java class for anonymous complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="dtosType">
+ * &lt;complexType>
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="dto" type="{http://www.sberbank.ru/meta}dtoType" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="module" type="{http://www.sberbank.ru/meta}moduleType" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -29,41 +30,42 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "dtosType", namespace = "http://www.sberbank.ru/meta", propOrder = {
-    "dto"
+@XmlType(name = "", propOrder = {
+    "module"
 })
-public class DtosType {
+@XmlRootElement(name = "root", namespace = "http://www.sberbank.ru/meta")
+public class Root {
 
     @XmlElement(namespace = "http://www.sberbank.ru/meta")
-    protected List<DtoType> dto;
+    protected List<ModuleType> module;
 
     /**
-     * Gets the value of the dto property.
+     * Gets the value of the module property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the dto property.
+     * This is why there is not a <CODE>set</CODE> method for the module property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getDto().add(newItem);
+     *    getModule().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link DtoType }
+     * {@link ModuleType }
      * 
      * 
      */
-    public List<DtoType> getDto() {
-        if (dto == null) {
-            dto = new ArrayList<DtoType>();
+    public List<ModuleType> getModule() {
+        if (module == null) {
+            module = new ArrayList<ModuleType>();
         }
-        return this.dto;
+        return this.module;
     }
 
 }

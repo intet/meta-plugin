@@ -1,13 +1,18 @@
 package com.sbrf.meta.plugin.dto.api;
 
-import com.sbrf.meta.plugin.dto.xml.ApisType;
-import com.sbrf.meta.plugin.dto.xml.DtosType;
-import com.sbrf.meta.plugin.dto.xml.RootType;
+import com.sbrf.meta.plugin.asm.util.DtoUtils;
+import com.sbrf.meta.plugin.dto.xml.ModuleType;
+import com.sbrf.meta.plugin.dto.xml.Root;
 import org.json.JSONObject;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class ApiStorage {
     //Api class - Api info
@@ -69,27 +74,46 @@ public class ApiStorage {
         return result;
     }
 
-    public RootType toXml() {
-        RootType result = new RootType();
-        ApisType api = new ApisType();
+    public String toXml() {
+        Map<GAV, ModuleType> moduleMap = new HashMap<>();
+        Map<GAV, Set<GAV>> dependencyMap = new HashMap<>();
         for (ApiInfo apiInfo : apiMap.values()) {
-            api.getApi().add(apiInfo.toXml());
+            apiInfo.toModule(moduleMap, dtoMap, dependencyMap);
         }
-        result.setApis(api);
-
-
-        DtosType dto = new DtosType();
-        for (Map.Entry<String, Dto> entry : dtoMap.entrySet()) {
-            dto.getDto().add(entry.getValue().toXml());
+        for (Dto dto : dtoMap.values()) {
+            dto.toModule(moduleMap, dtoMap, dependencyMap);
         }
-        result.setDtos(dto);
-        return result;
+        for (Map.Entry<GAV, Set<GAV>> entry : dependencyMap.entrySet()) {
+            ModuleType module = DtoUtils.getModule(moduleMap, entry.getKey());
+            for (GAV dependency : entry.getValue()) {
+                module.getDependencies().add(dependency.toXml());
+            }
+        }
+        Root root = new Root();
+        for (ModuleType module : moduleMap.values()) {
+            root.getModule().add(module);
+        }
+        return getString(root);
     }
     public void addComment(String api, String method, String comment) {
         ApiInfo apiInfo = this.apiMap.get(api);
         if (apiInfo == null)
             return;
         apiInfo.addComment(method, "/**" + comment + "*/");
+    }
+
+    private String getString(Root xml) {
+        try {
+            JAXBContext context = JAXBContext.newInstance(Root.class);
+            Marshaller marshaller = context.createMarshaller();
+            StringWriter sw = new StringWriter();
+            marshaller.marshal(xml, sw);
+            return sw.toString();
+
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
     public boolean hasDto(String className) {

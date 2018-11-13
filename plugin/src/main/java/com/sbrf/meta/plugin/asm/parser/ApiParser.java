@@ -34,9 +34,9 @@ public class ApiParser {
 
     private static void findMethod(Map<String, ClassNode> nodes, Map<String, GAV> metaInfo, ApiStorage storage, ClassNode cn, MethodNode mn) {
         String signature = mn.signature != null ? mn.signature : mn.desc;
-        List<String> input = getSignature(signature, nodes, storage);
-        List<String> exceptions = getExceptions(mn.exceptions, nodes, storage);
-        String output = getResult(signature, nodes, storage);
+        List<String> input = getSignature(signature, nodes, storage, metaInfo);
+        List<String> exceptions = getExceptions(mn.exceptions, nodes, storage, metaInfo);
+        String output = getResult(signature, nodes, storage, metaInfo);
         GAV gav = metaInfo.get(cn.name);
 
         String logicalName;
@@ -59,23 +59,25 @@ public class ApiParser {
                 versionCode, input, output, exceptions);
     }
 
-    private static String getResult(String signature, Map<String, ClassNode> nodes, ApiStorage storage) {
+    private static String getResult(String signature, Map<String, ClassNode> nodes, ApiStorage storage, Map<String, GAV> metaInfo) {
         String type = Utility.methodSignatureReturnType(signature);
-        return getDto(new String[]{type}, nodes, storage).get(0);
+        return getDto(new String[]{type}, nodes, storage, metaInfo).get(0);
     }
 
-    private static List<String> getSignature(String signature, Map<String, ClassNode> nodes, ApiStorage storage) {
+    private static List<String> getSignature(String signature, Map<String, ClassNode> nodes, ApiStorage storage, Map<String, GAV> metaInfo) {
+        if (signature.startsWith("<"))
+            signature = signature.substring(signature.indexOf(">") + 1);
         String[] types = Utility.methodSignatureArgumentTypes(signature);
-        return getDto(types, nodes, storage);
+        return getDto(types, nodes, storage, metaInfo);
     }
 
-    private static List<String> getExceptions(List<String> exceptions, Map<String, ClassNode> nodes, ApiStorage storage) {
+    private static List<String> getExceptions(List<String> exceptions, Map<String, ClassNode> nodes, ApiStorage storage, Map<String, GAV> metaInfo) {
         if (exceptions == null) {
             return Collections.emptyList();
         }
         return exceptions.stream()
                 .map(d -> d.replace('/', '.'))
-                .map(d -> getDto(d, nodes, storage))
+                .map(d -> getDto(d, nodes, storage, metaInfo))
                 .collect(Collectors.toList());
     }
 

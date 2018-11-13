@@ -1,6 +1,5 @@
 package com.sbrf.meta.plugin.dto.api;
 
-import com.sbrf.meta.plugin.dto.xml.ImplementationType;
 import org.json.JSONObject;
 
 import java.util.Objects;
@@ -33,12 +32,5 @@ public class ApiImpl {
     @Override
     public int hashCode() {
         return Objects.hash(className, gav);
-    }
-
-    public ImplementationType toXml() {
-        ImplementationType result = new ImplementationType();
-        result.setClazz(className);
-        result.setGav(gav.toXml());
-        return result;
     }
 }

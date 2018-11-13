@@ -1,7 +1,6 @@
 package com.sbrf.meta.plugin.dto.api;
 
 import com.sbrf.meta.plugin.dto.xml.InputType;
-import com.sbrf.meta.plugin.dto.xml.InvocationsType;
 import com.sbrf.meta.plugin.dto.xml.MethodType;
 import com.sbrf.meta.plugin.dto.xml.ThrowsType;
 import org.json.JSONArray;
@@ -85,12 +84,8 @@ public class ApiMethodInfo {
         }
         result.setThrows(throwsArray);
         result.setOutput(getClassType(this.output));
-        InvocationsType callArray = new InvocationsType();
-        for (ApiCall call : invocations) {
-            callArray.getInvocation().add(call.toXml());
-        }
-        result.setInvocations(callArray);
         result.setComment(comment);
+        result.setSignature(signature);
         return result;
     }
 

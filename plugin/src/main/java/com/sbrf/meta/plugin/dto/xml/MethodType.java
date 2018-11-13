@@ -24,9 +24,9 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="input" type="{http://www.sberbank.ru/meta}inputType"/>
  *         &lt;element name="output" type="{http://www.sberbank.ru/meta}classType"/>
  *         &lt;element name="version" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="invocations" type="{http://www.sberbank.ru/meta}invocationsType"/>
+ *         &lt;element name="signature" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="throws" type="{http://www.sberbank.ru/meta}throwsType"/>
- *         &lt;element name="comment" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="comment" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -42,7 +42,7 @@ import javax.xml.bind.annotation.XmlType;
     "input",
     "output",
     "version",
-    "invocations",
+    "signature",
     "_throws",
     "comment"
 })
@@ -59,10 +59,10 @@ public class MethodType {
     @XmlElement(namespace = "http://www.sberbank.ru/meta", required = true)
     protected String version;
     @XmlElement(namespace = "http://www.sberbank.ru/meta", required = true)
-    protected InvocationsType invocations;
+    protected String signature;
     @XmlElement(name = "throws", namespace = "http://www.sberbank.ru/meta", required = true)
     protected ThrowsType _throws;
-    @XmlElement(namespace = "http://www.sberbank.ru/meta", required = true)
+    @XmlElement(namespace = "http://www.sberbank.ru/meta")
     protected String comment;
 
     /**
@@ -186,27 +186,27 @@ public class MethodType {
     }
 
     /**
-     * Gets the value of the invocations property.
+     * Gets the value of the signature property.
      * 
      * @return
      *     possible object is
-     *     {@link InvocationsType }
+     *     {@link String }
      *     
      */
-    public InvocationsType getInvocations() {
-        return invocations;
+    public String getSignature() {
+        return signature;
     }
 
     /**
-     * Sets the value of the invocations property.
+     * Sets the value of the signature property.
      * 
      * @param value
      *     allowed object is
-     *     {@link InvocationsType }
+     *     {@link String }
      *     
      */
-    public void setInvocations(InvocationsType value) {
-        this.invocations = value;
+    public void setSignature(String value) {
+        this.signature = value;
     }
 
     /**

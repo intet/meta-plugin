@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="artifact" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="module" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="module" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="version" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="group" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
@@ -40,7 +40,7 @@ public class GavType {
 
     @XmlElement(namespace = "http://www.sberbank.ru/meta", required = true)
     protected String artifact;
-    @XmlElement(namespace = "http://www.sberbank.ru/meta", required = true)
+    @XmlElement(namespace = "http://www.sberbank.ru/meta")
     protected String module;
     @XmlElement(namespace = "http://www.sberbank.ru/meta", required = true)
     protected String version;

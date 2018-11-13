@@ -42,17 +42,17 @@ public class ParserMojo extends AbstractMojo {
     public void execute() {
         getLog().info("Start parse");
         Map<GAV, File> jars = FileUtil.getJars(this.project);
-
         collectSource();
         Collection<File> source = FileUtil.collectFileFromDir(new File(sourceDir));
         Collection<File> jarSource = FileUtil.getDependencySource(project);
 
         ApiStorage storage = Parser.parse(jars, source, jarSource);
-        saveToFile(storage.toXml().toString());
+        saveToFile(storage.toXml());
     }
 
+
     private void saveToFile(String json) {
-        try (FileWriter file = new FileWriter(directory + "/api.json")) {
+        try (FileWriter file = new FileWriter(directory + "/api.xml")) {
             file.write(json);
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage(), e);
