@@ -165,6 +165,8 @@
             <xs:element type="xs:string" name="version"/>
             <xs:element type="xs:string" name="group"/>
             <xs:element type="xs:string" name="repository" minOccurs="0"/>
+            <xs:element type="xs:string" name="extension" minOccurs="0"/>
+            <xs:element type="xs:string" name="classifier" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="dtoType">

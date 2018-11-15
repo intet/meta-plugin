@@ -23,6 +23,8 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="version" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="group" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="repository" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="extension" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="classifier" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -38,7 +40,9 @@ import javax.xml.bind.annotation.XmlType;
     "system",
     "version",
     "group",
-    "repository"
+    "repository",
+    "extension",
+    "classifier"
 })
 public class GavType {
 
@@ -54,6 +58,10 @@ public class GavType {
     protected String group;
     @XmlElement(namespace = "http://www.sberbank.ru/meta")
     protected String repository;
+    @XmlElement(namespace = "http://www.sberbank.ru/meta")
+    protected String extension;
+    @XmlElement(namespace = "http://www.sberbank.ru/meta")
+    protected String classifier;
 
     /**
      * Gets the value of the artifact property.
@@ -197,6 +205,54 @@ public class GavType {
      */
     public void setRepository(String value) {
         this.repository = value;
+    }
+
+    /**
+     * Gets the value of the extension property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getExtension() {
+        return extension;
+    }
+
+    /**
+     * Sets the value of the extension property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setExtension(String value) {
+        this.extension = value;
+    }
+
+    /**
+     * Gets the value of the classifier property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getClassifier() {
+        return classifier;
+    }
+
+    /**
+     * Sets the value of the classifier property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setClassifier(String value) {
+        this.classifier = value;
     }
 
 }
