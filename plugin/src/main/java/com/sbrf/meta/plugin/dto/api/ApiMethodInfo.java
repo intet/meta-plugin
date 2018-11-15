@@ -1,5 +1,9 @@
 package com.sbrf.meta.plugin.dto.api;
 
+import com.sbrf.meta.plugin.dto.ufs.APIIMType;
+import com.sbrf.meta.plugin.dto.ufs.ExceptionType;
+import com.sbrf.meta.plugin.dto.ufs.ParamType;
+import com.sbrf.meta.plugin.dto.ufs.ReturnTypeType;
 import com.sbrf.meta.plugin.dto.xml.InputType;
 import com.sbrf.meta.plugin.dto.xml.MethodType;
 import com.sbrf.meta.plugin.dto.xml.ThrowsType;
@@ -89,4 +93,43 @@ public class ApiMethodInfo {
         return result;
     }
 
+    public APIIMType toUfs(ApiInfo apiInfo) {
+        APIIMType apiimType = new APIIMType();
+        apiimType.setApiId(signature);
+        apiimType.setImInterfaceName(apiInfo.apiClass);
+        apiimType.setComment(comment);
+        {
+            ReturnTypeType returnType = new ReturnTypeType();
+            boolean isArray = false;
+            String out = output;
+            if (output.endsWith("[]")) {
+                isArray = true;
+                out = out.replace("[]", "");
+            }
+
+            returnType.setPackageName(output.substring(0, out.lastIndexOf(".")));
+            returnType.setTypeName(output.substring(out.lastIndexOf(".")));
+            returnType.setIsArray(isArray);
+            apiimType.setReturnType(returnType);
+        }
+        for (String in : input) {
+            ParamType param = new ParamType();
+            boolean isArray = false;
+            if (output.endsWith("[]")) {
+                isArray = true;
+                in = in.replace("[]", "");
+            }
+            param.setPackageName(output.substring(0, in.lastIndexOf(".")));
+            param.setTypeName(output.substring(in.lastIndexOf(".")));
+            param.setArray(isArray);
+            apiimType.getParams().add(param);
+        }
+        for (String throwStr : throwsList) {
+            ExceptionType exception = new ExceptionType();
+            exception.setTypeName(throwStr);
+            apiimType.getExceptions().add(exception);
+        }
+        apiimType.setVersion(version);
+        return apiimType;
+    }
 }

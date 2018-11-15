@@ -1,6 +1,8 @@
 package com.sbrf.meta.plugin.dto.api;
 
 import com.sbrf.meta.plugin.asm.util.ParserUtils;
+import com.sbrf.meta.plugin.dto.ufs.APIType;
+import com.sbrf.meta.plugin.dto.ufs.ApiTypeType;
 import com.sbrf.meta.plugin.dto.xml.ApiDeclarationType;
 import com.sbrf.meta.plugin.dto.xml.ApiImplementationType;
 import com.sbrf.meta.plugin.dto.xml.ApiInvocationType;
@@ -99,4 +101,15 @@ public class ApiInfo {
         }
     }
 
+    public APIType toUfs() {
+        APIType type = new APIType();
+        type.setId(apiClass);
+        type.setLogicalName(apiClass);
+        type.setTechnicalName(apiClass);
+        type.setApiType(ApiTypeType.JAVA);
+        for (ApiMethodInfo methodInfo : methods.values()) {
+            type.getVersions().add(methodInfo.toUfs(this));
+        }
+        return type;
+    }
 }

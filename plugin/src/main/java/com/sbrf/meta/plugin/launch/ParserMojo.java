@@ -38,6 +38,7 @@ public class ParserMojo extends AbstractMojo {
 
     @Component
     private BuildPluginManager pluginManager;
+    
 
     public void execute() {
         getLog().info("Start parse");
@@ -48,6 +49,8 @@ public class ParserMojo extends AbstractMojo {
 
         ApiStorage storage = Parser.parse(jars, source, jarSource);
         saveToFile(storage.toXml());
+
+        // storage.toUfs();
     }
 
 

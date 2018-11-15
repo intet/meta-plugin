@@ -43,7 +43,7 @@ public class ApiParser {
         String versionCode;
         if (!NodeUtils.hasAnnotation(mn, ANNOTATION_METHOD_NAME)) {
             logicalName = mn.name;
-            versionCode = "nono";
+            versionCode = "none";
         } else {
             Map<String, String> params = NodeUtils.getAnnotationParams(mn, ANNOTATION_METHOD_NAME);
             if (params.get("shortNameRu") != null) {

@@ -1,0 +1,822 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+            attributeFormDefault="unqualified">
+    <xsd:element name="UfsCandidateApiImportRq" type="UfsCandidateApiImportRq_Type">
+        <xsd:annotation>
+            <xsd:documentation>Получение сервисов из ИС (Запрос)</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="UfsCandidateApiImportRs" type="UfsCandidateApiImportRs_Type">
+        <xsd:annotation>
+            <xsd:documentation>Получение сервисов из ИС (Ответ)</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:complexType name="UfsCandidateApiImportRq_Type">
+        <xsd:annotation>
+            <xsd:documentation>Получение сервисов из ИС (Запрос)</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="RqUID" type="RqUID_Type">
+                <xsd:annotation>
+                    <xsd:documentation>Уникальный идентификатор сообщения</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="RqTm" type="DateTime">
+                <xsd:annotation>
+                    <xsd:documentation>Дата и время передачи сообщений</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="SPName" type="SPName_Type">
+                <xsd:annotation>
+                    <xsd:documentation>Идентификатор системы, которая сформировала сообщение</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="SystemId" type="SystemId_Type">
+                <xsd:annotation>
+                    <xsd:documentation>Идентификатор системы-получателя сообщения</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="apiList" type="API_Type" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="modules" type="Module_Type" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="bfsList" type="BFS_Type" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="UfsCandidateApiImportRs_Type">
+        <xsd:annotation>
+            <xsd:documentation>Получение сервисов из ИС (Ответ)</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="RqUID" type="RqUID_Type">
+                <xsd:annotation>
+                    <xsd:documentation>Уникальный идентификатор сообщения</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="RqTm" type="DateTime">
+                <xsd:annotation>
+                    <xsd:documentation>Дата и время передачи сообщений</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="SPName" type="SPName_Type">
+                <xsd:annotation>
+                    <xsd:documentation>Идентификатор системы, которая сформировала сообщение</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="SystemId" type="SystemId_Type">
+                <xsd:annotation>
+                    <xsd:documentation>Идентификатор системы-получателя сообщения</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="Status" type="RsStatus_Type">
+                <xsd:annotation>
+                    <xsd:documentation>Статус обработки сервиса</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="API_Type">
+        <xsd:annotation>
+            <xsd:documentation>Сущность: Сервис</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="id" type="C" minOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Идентификатор API</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="cmpUid" type="C" minOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>FS_Code или UID компонента</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="technicalName" type="C" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Техническое имя</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="logicalName" type="C" minOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Логическое имя</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="description" type="C" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Описание</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="domain" type="C" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Домен (только для ЕФС)</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="apiClassifier" type="C" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Тип интеграции</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="apiTechnology" type="C" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Тип интеграции</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="subCmpUid" type="C" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>только для БФС</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="systemUid" type="SystemUid_Type" minOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>systemUid</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="apiType" type="ApiType_Type" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>тип апи</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="versions" type="APIIM_Type" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:documentation>Имплементации АПИ</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="APIIM_Type">
+        <xsd:annotation>
+            <xsd:documentation>Сущность: Версия сервиса</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="id" type="C" minOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Идентификатор версии API</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="apiId" type="C" minOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Идентификатор API</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="versionCode" type="Version" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Версия сервиса</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="groupId" type="C" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>groupId</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="artifactId" type="C" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>artifactId</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="version" type="C" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>version</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="imMethodName" type="C" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Имя методы</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="imPackageName" type="C" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Имя пакета</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="imInterfaceName" type="C" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Имя интерфейса</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="comment" type="C" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Комментарий</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="documentationLink" type="URL_Type" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>javaDoc</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="nexusUrl" type="URL_Type" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Nexus URL</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="release" type="Release_Type" minOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>ПИР</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="mavenArtifact" type="MavenArtifact_Type" minOccurs="0" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Зависимость</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="returnType" type="ReturnType_Type" minOccurs="0" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Возвращаемый тип</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="params" type="Param_Type" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:documentation>Параметры</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="exceptions" type="Exception_Type" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:documentation>Исключения</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="versionType" type="Version_Type" minOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>type</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="subCmpUid" type="C" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>только для БФС</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="serviceArchitect" type="C" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>архитектор сервиса</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="moduleRecUid" type="C" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>только для БФС</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="moduleImRecUid" type="C" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>только для БФС</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="steps" type="Step_Type" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:documentation>Шаги FLOW</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="MavenArtifact_Type">
+        <xsd:annotation>
+            <xsd:documentation>Сущность: Зависимость</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="groupId" type="C" minOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>groupId</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="artifactId" type="C" minOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>artifactId</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="version" type="C" minOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>version</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="ReturnType_Type">
+        <xsd:annotation>
+            <xsd:documentation>Сущность: Возвращаемый тип</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="packageName" type="C" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Пакет</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="typeName" type="C" minOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Наименование</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="isArray" type="xsd:boolean">
+                <xsd:annotation>
+                    <xsd:documentation>Коллекция</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="Param_Type">
+        <xsd:annotation>
+            <xsd:documentation>Сущность: Параметр</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="technicalName" type="C" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Техническое наименование</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="logicalName" type="C" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Логическое наименование</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="packageName" type="C" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Пакет</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="typeName" type="C" minOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Наименование типа</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="array" type="xsd:boolean">
+                <xsd:annotation>
+                    <xsd:documentation>Коллекция</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="Exception_Type">
+        <xsd:annotation>
+            <xsd:documentation>Сущность: Исключения</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="typeName" type="C" minOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Наименование</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="BFS_Type">
+        <xsd:annotation>
+            <xsd:documentation>Сущность: БФС (CmpEntity)</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="id" type="C" minOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Идентификатор БФС</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="apiId" type="C" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Идентификатор API</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="logicalName" type="C" minOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Логическое имя</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="technicalName" type="C" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Техническое имя</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="description" type="C" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Описание</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="status" type="Status_Type" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Статус</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="confluenceLink" type="URL_Type" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Confluence link</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="versions" type="BFSVersion_Type" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:documentation>Версии БФС</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="packages" type="Package_Type" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:documentation>Пакеты</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="Step_Type">
+        <xsd:annotation>
+            <xsd:documentation>Сущность: FlowStep (StepEntity)</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="id" type="C" minOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Идентификатор</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="apiVersionId" type="C" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Идентификатор версии API</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="logicalName" type="C" minOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Описание</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="technicalName" type="C" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Идентификатор шага API Flow в ИС</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="testable" type="xsd:boolean">
+                <xsd:annotation>
+                    <xsd:documentation>Тестируемый</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="BFSVersion_Type">
+        <xsd:annotation>
+            <xsd:documentation>Версия БФС</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="id" type="C" minOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Идентификатор версии БФС</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="bfsId" type="C" minOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Идентификатор БФС</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="versionCode" type="Version" minOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Версия БФС</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="release" type="Release_Type" minOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>ПИР</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="versionType" type="Version_Type" minOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>type</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="ModuleVersion_Type">
+        <xsd:annotation>
+            <xsd:documentation>Сущность: Версия Модуля</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="id" type="C" minOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Идентификатор версии Модуля</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="moduleId" type="C" minOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Идентификатор Модуля</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="versionCode" type="Version" minOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Номер версии</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="subcmpUid" type="C" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Связь с БФС</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="versionType" type="Version_Type" minOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Тип версии</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="release" type="Release_Type" minOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Номер релиза</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="team" type="C" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Команда</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="project" type="C" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Проект</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="documentationLink" type="URL_Type" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>javaDoc</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="nexusUrl" type="URL_Type" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Nexus URL</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="mavenArtifact" type="MavenArtifact_Type" minOccurs="0" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Зависимость АПИ</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="cmpUid" type="C" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>FS_Code или UID компонента</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="Module_Type">
+        <xsd:annotation>
+            <xsd:documentation>Сущность: Модуль</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="id" type="C" minOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Идентификатор Модуля</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="logicalName" type="C" minOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Описание</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="technicalName" type="C" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Наименование Модуля</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="groupId" type="C" minOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Идентификатор группы</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="artifactId" type="C" minOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Идентификатор артефакта</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="versions" type="ModuleVersion_Type" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:documentation>Версия модуля</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="RsStatus_Type">
+        <xsd:annotation>
+            <xsd:documentation>Статус обработки</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="statusId" type="LoadStatusId_Type">
+                <xsd:annotation>
+                    <xsd:documentation>Идентификатор статуса ответа</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="statusDesc" type="C6000_Type" minOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Описание статуса ответа</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="loadStatus" type="LoadStatus_Type" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:documentation>Статус загрузки данных</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="LoadStatus_Type">
+        <xsd:annotation>
+            <xsd:documentation>Статус обработки сервиса</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="entityType" type="EntityType_Type">
+                <xsd:annotation>
+                    <xsd:documentation>Идентификатор статуса ответа</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="statusId" type="LoadStatusId_Type">
+                <xsd:annotation>
+                    <xsd:documentation>Идентификатор статуса ответа</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="statusDesc" type="C6000_Type" minOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Описание статуса ответа</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="id" type="C" minOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Идентификатор</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:simpleType name="C">
+        <xsd:annotation>
+            <xsd:documentation>Базовый символьный тип, элемент данного типа может содержать количество символов до
+                определенного максимума
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="CNE_Type">
+        <xsd:annotation>
+            <xsd:documentation>Не пустой символьный тип</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="C">
+            <xsd:minLength value="1"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="C255_Type">
+        <xsd:annotation>
+            <xsd:documentation>Символьный тип с ограниченим длины в 255 символов</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="C">
+            <xsd:maxLength value="255"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="C512_Type">
+        <xsd:annotation>
+            <xsd:documentation>Символьный тип с ограниченим длины в 512 символов</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="C">
+            <xsd:maxLength value="512"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="C1024_Type">
+        <xsd:annotation>
+            <xsd:documentation>Символьный тип с ограниченим длины в 1024 символов</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="C">
+            <xsd:maxLength value="1024"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="C6000_Type">
+        <xsd:annotation>
+            <xsd:documentation>Символьный тип с ограниченим длины в 6000 символов</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="C">
+            <xsd:maxLength value="6000"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="Date">
+        <xsd:annotation>
+            <xsd:documentation>Тип: Дата</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:date"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="DateTime">
+        <xsd:annotation>
+            <xsd:documentation>Тип данных для представления дат</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:dateTime"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="URL_Type">
+        <xsd:annotation>
+            <xsd:documentation>Url http-сервиса</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="C"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="Package_Type">
+        <xsd:annotation>
+            <xsd:documentation>Пакет</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="C"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="Deleted_Type">
+        <xsd:annotation>
+            <xsd:documentation>Признак удаления записи: 0 - акутальная, >0 - удаленная</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="C">
+            <xsd:pattern value="\d{1}"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="RqUID_Type">
+        <xsd:annotation>
+            <xsd:documentation>Уникальный идентификатор запроса</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="UUID"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="SPName_Type">
+        <xsd:annotation>
+            <xsd:documentation>Идентификатор системы, которая сформировала сообщение</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="C">
+            <xsd:maxLength value="50"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="SystemId_Type">
+        <xsd:annotation>
+            <xsd:documentation>Идентификатор системы, в которую отправляется сообщение</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="C">
+            <xsd:maxLength value="50"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="UUID">
+        <xsd:annotation>
+            <xsd:documentation/>
+        </xsd:annotation>
+        <xsd:restriction base="C">
+            <xsd:pattern value="[0-9a-zA-Z]{32}"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="Version">
+        <xsd:annotation>
+            <xsd:documentation/>
+        </xsd:annotation>
+        <xsd:restriction base="C"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="Version_Type">
+        <xsd:annotation>
+            <xsd:documentation>Тип версии</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="C">
+            <xsd:enumeration value="Snapshot"/>
+            <xsd:enumeration value="Release"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="ApiType_Type">
+        <xsd:annotation>
+            <xsd:documentation>Тип апи</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="C">
+            <xsd:enumeration value="WORKFLOW"/>
+            <xsd:enumeration value="REST"/>
+            <xsd:enumeration value="JAVA"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="SystemUid_Type">
+        <xsd:annotation>
+            <xsd:documentation>systemUid</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="C">
+            <xsd:enumeration value="PPRB"/>
+            <xsd:enumeration value="EFS"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="RequestType_Type">
+        <xsd:annotation>
+            <xsd:documentation>Тип запроса</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="C">
+            <xsd:enumeration value="Sync"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="CallTemplate_Type">
+        <xsd:annotation>
+            <xsd:documentation>Тип вызова</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="C">
+            <xsd:enumeration value="CallReply"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="Status_Type">
+        <xsd:annotation>
+            <xsd:documentation>Статус</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="C">
+            <xsd:enumeration value="INDEFINITE"/>
+            <xsd:enumeration value="RELEASED"/>
+            <xsd:enumeration value="RELEASED_WITHOUT_PLANNING"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="Release_Type">
+        <xsd:annotation>
+            <xsd:documentation>Номер ПИРа релиза</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="C"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="LoadStatusId_Type">
+        <xsd:annotation>
+            <xsd:documentation>Тип версии</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="C">
+            <xsd:enumeration value="SUCCESS"/>
+            <xsd:enumeration value="LOAD_WITH_ERROR"/>
+            <xsd:enumeration value="FAIL"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="EntityType_Type">
+        <xsd:annotation>
+            <xsd:documentation>Тип версии</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="C">
+            <xsd:enumeration value="API"/>
+            <xsd:enumeration value="API_VERSION"/>
+            <xsd:enumeration value="BFS"/>
+            <xsd:enumeration value="BFS_VERSION"/>
+            <xsd:enumeration value="MODULE"/>
+            <xsd:enumeration value="MODULE_VERSION"/>
+            <xsd:enumeration value="FLOW_STEP"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+</xsd:schema>

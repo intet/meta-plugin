@@ -1,6 +1,7 @@
 package com.sbrf.meta.plugin.dto.api;
 
 import com.sbrf.meta.plugin.asm.util.DtoUtils;
+import com.sbrf.meta.plugin.dto.ufs.UfsCandidateApiImportRqType;
 import com.sbrf.meta.plugin.dto.xml.ModuleType;
 import com.sbrf.meta.plugin.dto.xml.Root;
 import org.json.JSONObject;
@@ -122,5 +123,13 @@ public class ApiStorage {
 
     public void addDto(String className, Dto dto) {
         dtoMap.put(className, dto);
+    }
+
+    public void toUfs() {
+        UfsCandidateApiImportRqType rqType = new UfsCandidateApiImportRqType();
+        for (ApiInfo apiInfo : apiMap.values()) {
+            rqType.getApiList().add(apiInfo.toUfs());
+
+        }
     }
 }
