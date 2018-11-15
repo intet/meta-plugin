@@ -1,13 +1,13 @@
 package com.sbrf.meta.plugin.github.parser;
 
 import com.github.javaparser.ast.CompilationUnit;
-import com.github.javaparser.ast.body.BodyDeclaration;
-import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
-import com.github.javaparser.ast.body.MethodDeclaration;
-import com.github.javaparser.ast.body.TypeDeclaration;
+import com.github.javaparser.ast.body.*;
 import com.github.javaparser.resolution.declarations.ResolvedReferenceTypeDeclaration;
 import com.github.javaparser.symbolsolver.javaparsermodel.JavaParserFacade;
 import com.sbrf.meta.plugin.dto.api.ApiStorage;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ApiParser{
     private final CompilationUnit unit;
@@ -45,6 +45,15 @@ public class ApiParser{
 
     private void parseApiMethod(MethodDeclaration methodDeclaration, String apiName) {
         String desc = Util.getMethodSignature(methodDeclaration.getName(), methodDeclaration.getParameters(), facade);
+        List<String> paramsName = new ArrayList<>();
+        if (methodDeclaration.getParameters() != null) {
+            for (Parameter param : methodDeclaration.getParameters()) {
+                paramsName.add(param.getNameAsString());
+            }
+            storage.addParamsName(apiName, desc, paramsName);
+        }
+
+
         methodDeclaration.getComment().ifPresent(comment -> storage.addComment(apiName, desc, comment.getContent()));
 
     }

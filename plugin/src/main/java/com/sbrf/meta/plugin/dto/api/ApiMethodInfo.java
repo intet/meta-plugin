@@ -22,6 +22,7 @@ public class ApiMethodInfo {
     public final String logicalName;
     public final String version;
     public final List<String> input;
+    public List<String> inputName;
     public final List<String> throwsList;
     public final String output;
     public final Set<ApiCall> invocations = new HashSet<>();
@@ -67,6 +68,10 @@ public class ApiMethodInfo {
         return result;
     }
 
+    public void addParamsName(List<String> paramsName) {
+        inputName = paramsName;
+    }
+
     public void addComment(String comment) {
         this.comment = comment;
     }
@@ -77,11 +82,17 @@ public class ApiMethodInfo {
         result.setTechnicalName(technicalName);
         result.setVersion(version);
 
-        InputType inputArray = new InputType();
-        for (String className : input) {
-            inputArray.getParameter().add(getClassType(className));
+        for (int i = 0; i < input.size(); i++) {
+            InputType inputType = new InputType();
+            inputType.setClazz(getClassType(input.get(i)));
+            if (inputName != null) {
+                inputType.setName(inputName.get(i));
+            } else {
+                inputType.setName("none");
+            }
+            result.getInput().add(inputType);
         }
-        result.setInput(inputArray);
+
         ThrowsType throwsArray = new ThrowsType();
         for (String throwItem : throwsList) {
             throwsArray.getThrows().add(throwItem);

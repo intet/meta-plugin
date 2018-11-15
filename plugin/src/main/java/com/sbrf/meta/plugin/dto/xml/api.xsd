@@ -61,7 +61,7 @@
                     <xs:documentation>Физическое название метода Api</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element type="ns1:inputType" name="input">
+            <xs:element type="ns1:inputType" name="input" maxOccurs="unbounded" minOccurs="0">
                 <xs:annotation>
                     <xs:documentation>Входящие параметры метода Api</xs:documentation>
                 </xs:annotation>
@@ -95,7 +95,8 @@
     </xs:complexType>
     <xs:complexType name="inputType">
         <xs:sequence>
-            <xs:element name="parameter" type="ns1:classType" maxOccurs="unbounded" minOccurs="0">
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="class" type="ns1:classType">
                 <xs:annotation>
                     <xs:documentation>Класс параметра Api</xs:documentation>
                 </xs:annotation>
