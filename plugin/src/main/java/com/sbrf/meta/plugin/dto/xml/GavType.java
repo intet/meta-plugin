@@ -21,6 +21,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="module" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="version" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="group" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="repository" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -34,7 +35,8 @@ import javax.xml.bind.annotation.XmlType;
     "artifact",
     "module",
     "version",
-    "group"
+    "group",
+    "repository"
 })
 public class GavType {
 
@@ -46,6 +48,8 @@ public class GavType {
     protected String version;
     @XmlElement(namespace = "http://www.sberbank.ru/meta", required = true)
     protected String group;
+    @XmlElement(namespace = "http://www.sberbank.ru/meta")
+    protected String repository;
 
     /**
      * Gets the value of the artifact property.
@@ -141,6 +145,30 @@ public class GavType {
      */
     public void setGroup(String value) {
         this.group = value;
+    }
+
+    /**
+     * Gets the value of the repository property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getRepository() {
+        return repository;
+    }
+
+    /**
+     * Sets the value of the repository property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setRepository(String value) {
+        this.repository = value;
     }
 
 }
