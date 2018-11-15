@@ -16,13 +16,7 @@
                 <groupId>com.sbt.meta</groupId>
                 <artifactId>plugin</artifactId>
                 <version>1.0.4</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>findApi</goal>
-                        </goals>
-                    </execution>
-                </executions>
+                <extensions>true</extensions>
             </plugin>
             <plugin>
                 <artifactId>maven-install-plugin</artifactId>

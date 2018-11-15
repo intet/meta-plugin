@@ -19,7 +19,7 @@ import java.util.Map;
 
 import static org.twdata.maven.mojoexecutor.MojoExecutor.*;
 
-@Mojo(name = "findApi", requiresDependencyResolution = ResolutionScope.COMPILE,
+@Mojo(name = "findApi", requiresDependencyResolution = ResolutionScope.NONE,
         defaultPhase = LifecyclePhase.PACKAGE, executionStrategy = "always")
 @Execute(phase = LifecyclePhase.PACKAGE, goal = "findApi")
 public class ParserMojo extends AbstractMojo {

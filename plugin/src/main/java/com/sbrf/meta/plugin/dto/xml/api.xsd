@@ -159,7 +159,8 @@
     <xs:complexType name="gavType">
         <xs:sequence>
             <xs:element type="xs:string" name="artifact"/>
-            <xs:element type="xs:string" name="module" minOccurs="0"/>
+            <xs:element type="xs:string" name="component" minOccurs="0"/>
+            <xs:element type="xs:string" name="system" minOccurs="0"/>
             <xs:element type="xs:string" name="version"/>
             <xs:element type="xs:string" name="group"/>
         </xs:sequence>

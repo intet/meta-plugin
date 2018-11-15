@@ -10,7 +10,8 @@ public class GAV {
     public final String group;
     public final String artifact;
     public final String version;
-    public String module;
+    public String component;
+    public String system;
 
     public GAV(String group, String artifact, String version) {
         this.group = group;
@@ -44,7 +45,7 @@ public class GAV {
         result.put("group", group);
         result.put("artifact", artifact);
         result.put("version", version);
-        result.put("module", module);
+        result.put("component", component);
         return result;
     }
 
@@ -52,7 +53,8 @@ public class GAV {
         GavType result = new GavType();
         result.setArtifact(artifact);
         result.setGroup(group);
-        result.setModule(module);
+        result.setComponent(component);
+        result.setSystem(system);
         result.setVersion(version);
         return result;
     }

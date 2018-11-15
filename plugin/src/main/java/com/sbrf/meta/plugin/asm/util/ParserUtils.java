@@ -20,9 +20,14 @@ public class ParserUtils {
         try {
             JarFile jar = new JarFile(jarFile);
             try {
-                String module = jar.getManifest().getMainAttributes().getValue("module");
-                if (module != null)
-                    gav.module = module;
+                String system = jar.getManifest().getMainAttributes().getValue("system");
+                if (system != null) {
+                    gav.system = system;
+                }
+                String component = jar.getManifest().getMainAttributes().getValue("component");
+                if (component != null) {
+                    gav.component = component;
+                }
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

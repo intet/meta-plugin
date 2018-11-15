@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component-set>
+    <components>
+        <component>
+            <role>org.apache.maven.lifecycle.mapping.LifecycleMapping</role>
+            <role-hint>findApi</role-hint>
+            <implementation>org.apache.maven.lifecycle.Lifecycle</implementation>
+            <configuration>
+                <id>find</id>
+                <phases>
+                    <package>com.sbt.meta:plugin:1.0.5:findApi</package>
+                </phases>
+                <default-phases>
+                    <package>com.sbt.meta:plugin:1.0.5:findApi</package>
+                </default-phases>
+            </configuration>
+        </component>
+    </components>
+</component-set>
