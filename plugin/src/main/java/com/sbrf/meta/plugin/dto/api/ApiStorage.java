@@ -96,11 +96,19 @@ public class ApiStorage {
         }
         return getString(root);
     }
+
     public void addComment(String api, String method, String comment) {
         ApiInfo apiInfo = this.apiMap.get(api);
         if (apiInfo == null)
             return;
         apiInfo.addComment(method, "/**" + comment + "*/");
+    }
+
+    public void addParamsName(String api, String method, List<String> paramsName) {
+        ApiInfo apiInfo = this.apiMap.get(api);
+        if (apiInfo == null)
+            return;
+        apiInfo.addParamsName(method, paramsName);
     }
 
     private String getString(Root xml) {

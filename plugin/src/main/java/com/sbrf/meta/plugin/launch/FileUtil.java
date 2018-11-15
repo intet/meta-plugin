@@ -3,23 +3,55 @@ package com.sbrf.meta.plugin.launch;
 import com.sbrf.meta.plugin.dto.api.GAV;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.project.MavenProject;
+import org.eclipse.aether.RepositorySystem;
+import org.eclipse.aether.RepositorySystemSession;
+import org.eclipse.aether.artifact.DefaultArtifact;
+import org.eclipse.aether.repository.RemoteRepository;
+import org.eclipse.aether.resolution.ArtifactRequest;
+import org.eclipse.aether.resolution.ArtifactResolutionException;
+import org.eclipse.aether.resolution.ArtifactResult;
 
 import java.io.File;
 import java.util.*;
 
 public class FileUtil {
-    static Map<GAV, File> getJars(MavenProject project) {
+    static Map<GAV, File> getJars(MavenProject project, RepositorySystem repoSystem, RepositorySystemSession repoSession, List<RemoteRepository> repositories) {
         Map<GAV, File> result = new HashMap<>();
         for (Artifact artifact : project.getArtifacts()) {
             File file = artifact.getFile();
             if (file == null)
                 continue;
-            result.put(new GAV(artifact), file);
+
+            String repository = getRepositoryUrl(repoSystem, repoSession, repositories, artifact);
+            result.put(new GAV(artifact, repository), file);
+
         }
         if (project.getArtifact().getFile() != null) {
-            result.put(new GAV(project.getArtifact()), project.getArtifact().getFile());
+            result.put(new GAV(project.getArtifact(), ""), project.getArtifact().getFile());
         }
         return result;
+    }
+
+    private static String getRepositoryUrl(RepositorySystem repoSystem, RepositorySystemSession repoSession, List<RemoteRepository> repositories, Artifact artifact) {
+        ArtifactResult artifactResult = null;
+        org.eclipse.aether.artifact.Artifact aetherArtifact = new DefaultArtifact(
+                artifact.getGroupId(),
+                artifact.getArtifactId(),
+                artifact.getClassifier(),
+                artifact.getType(),
+                artifact.getVersion(), null);
+        ArtifactRequest req = new ArtifactRequest().setRepositories(repositories).setArtifact(aetherArtifact);
+        try {
+            artifactResult = repoSystem.resolveArtifact(repoSession, req);
+        } catch (ArtifactResolutionException e) {
+            e.printStackTrace();
+        }
+
+        String repository = null;
+        if (artifactResult != null && artifactResult.getRepository() instanceof RemoteRepository) {
+            repository = ((RemoteRepository) artifactResult.getRepository()).getUrl();
+        }
+        return repository;
     }
 
     public static Collection<File> collectFileFromDir(File dir) {

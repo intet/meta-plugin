@@ -12,6 +12,7 @@ public class GAV {
     public final String version;
     public String component;
     public String system;
+    private String repository;
 
     public GAV(String group, String artifact, String version) {
         this.group = group;
@@ -19,10 +20,11 @@ public class GAV {
         this.version = version;
     }
 
-    public GAV(Artifact artifact) {
+    public GAV(Artifact artifact, String repository) {
         this(artifact.getGroupId(),
                 artifact.getArtifactId(),
                 artifact.getVersion());
+        this.repository = repository;
     }
 
     @Override
@@ -56,6 +58,7 @@ public class GAV {
         result.setComponent(component);
         result.setSystem(system);
         result.setVersion(version);
+        result.setRepository(repository);
         return result;
     }
 }

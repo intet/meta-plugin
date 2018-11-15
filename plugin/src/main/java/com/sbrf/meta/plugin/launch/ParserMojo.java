@@ -10,11 +10,15 @@ import org.apache.maven.plugin.BuildPluginManager;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.*;
 import org.apache.maven.project.MavenProject;
+import org.eclipse.aether.RepositorySystem;
+import org.eclipse.aether.RepositorySystemSession;
+import org.eclipse.aether.repository.RemoteRepository;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import static org.twdata.maven.mojoexecutor.MojoExecutor.*;
@@ -38,11 +42,19 @@ public class ParserMojo extends AbstractMojo {
 
     @Component
     private BuildPluginManager pluginManager;
-    
+
+    @Parameter(defaultValue = "${project.remoteProjectRepositories}")
+    private List<RemoteRepository> repositories;
+
+    @Parameter(defaultValue = "${repositorySystemSession}")
+    private RepositorySystemSession repoSession;
+
+    @Component
+    private RepositorySystem repoSystem;
 
     public void execute() {
         getLog().info("Start parse");
-        Map<GAV, File> jars = FileUtil.getJars(this.project);
+        Map<GAV, File> jars = FileUtil.getJars(this.project, repoSystem, repoSession, repositories);
         collectSource();
         Collection<File> source = FileUtil.collectFileFromDir(new File(sourceDir));
         Collection<File> jarSource = FileUtil.getDependencySource(project);

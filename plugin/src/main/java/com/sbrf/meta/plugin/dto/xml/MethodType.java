@@ -1,6 +1,8 @@
 
 package com.sbrf.meta.plugin.dto.xml;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -21,7 +23,7 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence>
  *         &lt;element name="logicalName" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="technicalName" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="input" type="{http://www.sberbank.ru/meta}inputType"/>
+ *         &lt;element name="input" type="{http://www.sberbank.ru/meta}inputType" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="output" type="{http://www.sberbank.ru/meta}classType"/>
  *         &lt;element name="version" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="signature" type="{http://www.w3.org/2001/XMLSchema}string"/>
@@ -52,8 +54,8 @@ public class MethodType {
     protected String logicalName;
     @XmlElement(namespace = "http://www.sberbank.ru/meta", required = true)
     protected String technicalName;
-    @XmlElement(namespace = "http://www.sberbank.ru/meta", required = true)
-    protected InputType input;
+    @XmlElement(namespace = "http://www.sberbank.ru/meta")
+    protected List<InputType> input;
     @XmlElement(namespace = "http://www.sberbank.ru/meta", required = true)
     protected ClassType output;
     @XmlElement(namespace = "http://www.sberbank.ru/meta", required = true)
@@ -116,25 +118,30 @@ public class MethodType {
     /**
      * Gets the value of the input property.
      * 
-     * @return
-     *     possible object is
-     *     {@link InputType }
-     *     
-     */
-    public InputType getInput() {
-        return input;
-    }
-
-    /**
-     * Sets the value of the input property.
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the input property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link InputType }
-     *     
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getInput().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link InputType }
+     * 
+     * 
      */
-    public void setInput(InputType value) {
-        this.input = value;
+    public List<InputType> getInput() {
+        if (input == null) {
+            input = new ArrayList<InputType>();
+        }
+        return this.input;
     }
 
     /**

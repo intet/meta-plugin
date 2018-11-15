@@ -65,6 +65,13 @@ public class ApiInfo {
         return result;
     }
 
+
+    public void addParamsName(String method, List<String> paramsName) {
+        ApiMethodInfo methodInfo = this.methods.get(method);
+        if (methodInfo == null) return;
+        methodInfo.addParamsName(paramsName);
+    }
+
     public void addComment(String method, String comment) {
         ApiMethodInfo methodInfo = this.methods.get(method);
         if (methodInfo == null) return;
