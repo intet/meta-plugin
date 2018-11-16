@@ -17,17 +17,18 @@ import java.util.*;
 public class FileUtil {
     static Map<GAV, File> getJars(MavenProject project, RepositorySystem repoSystem, RepositorySystemSession repoSession, List<RemoteRepository> repositories) {
         Map<GAV, File> result = new HashMap<>();
+        project.setArtifactFilter(artifact -> true);
         for (Artifact artifact : project.getArtifacts()) {
             File file = artifact.getFile();
             if (file == null)
                 continue;
 
             String repository = getRepositoryUrl(repoSystem, repoSession, repositories, artifact);
-            result.put(new GAV(artifact, repository), file);
+            result.put(new GAV(artifact, repository, artifact.getClassifier()), file);
 
         }
         if (project.getArtifact().getFile() != null) {
-            result.put(new GAV(project.getArtifact(), ""), project.getArtifact().getFile());
+            result.put(new GAV(project.getArtifact(), "", ""), project.getArtifact().getFile());
         }
         return result;
     }

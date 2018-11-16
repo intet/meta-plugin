@@ -17,6 +17,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
+ *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="type" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="isArray" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
  *         &lt;element name="super" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
@@ -31,6 +32,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "classType", namespace = "http://www.sberbank.ru/meta", propOrder = {
+    "name",
     "type",
     "isArray",
     "_super",
@@ -39,6 +41,8 @@ import javax.xml.bind.annotation.XmlType;
 public class ClassType {
 
     @XmlElement(namespace = "http://www.sberbank.ru/meta", required = true)
+    protected String name;
+    @XmlElement(namespace = "http://www.sberbank.ru/meta", required = true)
     protected String type;
     @XmlElement(namespace = "http://www.sberbank.ru/meta", defaultValue = "false")
     protected Boolean isArray;
@@ -46,6 +50,30 @@ public class ClassType {
     protected String _super;
     @XmlElement(namespace = "http://www.sberbank.ru/meta")
     protected TypesType types;
+
+    /**
+     * Gets the value of the name property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Sets the value of the name property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setName(String value) {
+        this.name = value;
+    }
 
     /**
      * Gets the value of the type property.

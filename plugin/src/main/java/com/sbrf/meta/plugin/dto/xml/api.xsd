@@ -2,10 +2,20 @@
 <xs:schema xmlns:ns1="http://www.sberbank.ru/meta" xmlns:xs="http://www.w3.org/2001/XMLSchema"
            targetNamespace="http://www.sberbank.ru/meta" elementFormDefault="qualified"
            attributeFormDefault="unqualified">
-    <xs:element name="root">
+    <xs:element name="reverseRq">
         <xs:complexType>
             <xs:sequence>
                 <xs:element type="ns1:moduleType" name="module" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element name="RqUID" type="ns1:UUID">
+                    <xs:annotation>
+                        <xs:documentation>Уникальный идентификатор сообщения</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="RqTm" type="xs:dateTime">
+                    <xs:annotation>
+                        <xs:documentation>Дата и время передачи сообщений</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -76,11 +86,11 @@
                     <xs:documentation>Версия метода Api</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element type="xs:string" name="signature">
-                <xs:annotation>
-                    <xs:documentation>Сигнатура метода</xs:documentation>
-                </xs:annotation>
-            </xs:element>
+            <!--     <xs:element type="xs:string" name="signature">
+                     <xs:annotation>
+                         <xs:documentation>Сигнатура метода</xs:documentation>
+                     </xs:annotation>
+                 </xs:element>-->
             <xs:element type="ns1:throwsType" name="throws">
                 <xs:annotation>
                     <xs:documentation>Выбрашиваемые исключения метода Api</xs:documentation>
@@ -232,6 +242,11 @@
     </xs:complexType>
     <xs:complexType name="classType">
         <xs:sequence>
+            <xs:element type="xs:string" name="name">
+                <xs:annotation>
+                    <xs:documentation>Полное имя</xs:documentation>
+                </xs:annotation>
+            </xs:element>
             <xs:element type="xs:string" name="type">
                 <xs:annotation>
                     <xs:documentation>Класс поля</xs:documentation>
@@ -254,4 +269,12 @@
             </xs:element>
         </xs:sequence>
     </xs:complexType>
+    <xs:simpleType name="UUID">
+        <xs:annotation>
+            <xs:documentation/>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[0-9a-zA-Z]{32}"/>
+        </xs:restriction>
+    </xs:simpleType>
 </xs:schema>

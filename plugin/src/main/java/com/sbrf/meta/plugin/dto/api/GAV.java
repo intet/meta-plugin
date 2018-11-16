@@ -13,6 +13,7 @@ public class GAV {
     public String component;
     public String system;
     private String repository;
+    private String classifier;
 
     public GAV(String group, String artifact, String version) {
         this.group = group;
@@ -20,11 +21,12 @@ public class GAV {
         this.version = version;
     }
 
-    public GAV(Artifact artifact, String repository) {
+    public GAV(Artifact artifact, String repository, String classifier) {
         this(artifact.getGroupId(),
                 artifact.getArtifactId(),
                 artifact.getVersion());
         this.repository = repository;
+        this.classifier = classifier;
     }
 
     @Override
@@ -59,6 +61,7 @@ public class GAV {
         result.setSystem(system);
         result.setVersion(version);
         result.setRepository(repository);
+        result.setClassifier(classifier);
         return result;
     }
 }

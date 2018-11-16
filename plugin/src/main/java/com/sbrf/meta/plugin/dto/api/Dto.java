@@ -64,6 +64,7 @@ public class Dto {
     public JSONObject toJson() {
         JSONObject result = new JSONObject();
         result.put("class", dtoClass);
+        result.put("class", dtoClass);
         if (extend)
             result.put("extend", "true");
         if (fields.size() > 0) {
@@ -78,9 +79,10 @@ public class Dto {
         return result;
     }
 
-    public void toModule(Map<GAV, ModuleType> moduleMap, Map<String, Dto> dtoMap, Map<GAV, Set<GAV>> dependencyMap) {
+    public void toModule(Map<GAV, ModuleType> moduleMap, Map<String, Dto> dtoMap, Map<GAV, Set<GAV>> dependencyMap, String key) {
         DtoType result = new DtoType();
         result.setClazz(getClassType(dtoClass, superClass));
+        result.getClazz().setName(key);
         FieldsType dtoArray = new FieldsType();
         for (Field field : fields.values()) {
             dtoArray.getField().add(field.toXml());
@@ -90,7 +92,7 @@ public class Dto {
         result.setFields(dtoArray);
         ModuleType module;
         if (gav == null)
-            module = getModule(moduleMap, new GAV("", "", ""));
+            module = getModule(moduleMap, new GAV("java.util", "", ""));
         else
             module = getModule(moduleMap, gav);
         module.getDto().add(result);

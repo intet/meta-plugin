@@ -3,7 +3,7 @@ package com.sbrf.meta.plugin.dto.api;
 import com.sbrf.meta.plugin.asm.util.DtoUtils;
 import com.sbrf.meta.plugin.dto.ufs.UfsCandidateApiImportRqType;
 import com.sbrf.meta.plugin.dto.xml.ModuleType;
-import com.sbrf.meta.plugin.dto.xml.Root;
+import com.sbrf.meta.plugin.dto.xml.ReverseRq;
 import org.json.JSONObject;
 
 import javax.xml.bind.JAXBContext;
@@ -81,8 +81,8 @@ public class ApiStorage {
         for (ApiInfo apiInfo : apiMap.values()) {
             apiInfo.toModule(moduleMap, dtoMap, dependencyMap);
         }
-        for (Dto dto : dtoMap.values()) {
-            dto.toModule(moduleMap, dtoMap, dependencyMap);
+        for (Map.Entry<String, Dto> entry : dtoMap.entrySet()) {
+            entry.getValue().toModule(moduleMap, dtoMap, dependencyMap, entry.getKey());
         }
         for (Map.Entry<GAV, Set<GAV>> entry : dependencyMap.entrySet()) {
             ModuleType module = DtoUtils.getModule(moduleMap, entry.getKey());
@@ -90,7 +90,7 @@ public class ApiStorage {
                 module.getDependencies().add(dependency.toXml());
             }
         }
-        Root root = new Root();
+        ReverseRq root = new ReverseRq();
         for (ModuleType module : moduleMap.values()) {
             root.getModule().add(module);
         }
@@ -111,9 +111,9 @@ public class ApiStorage {
         apiInfo.addParamsName(method, paramsName);
     }
 
-    private String getString(Root xml) {
+    private String getString(ReverseRq xml) {
         try {
-            JAXBContext context = JAXBContext.newInstance(Root.class);
+            JAXBContext context = JAXBContext.newInstance(ReverseRq.class);
             Marshaller marshaller = context.createMarshaller();
             StringWriter sw = new StringWriter();
             marshaller.marshal(xml, sw);

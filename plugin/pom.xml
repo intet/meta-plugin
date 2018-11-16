@@ -12,7 +12,7 @@
 
     <groupId>com.sbt.meta</groupId>
     <artifactId>plugin</artifactId>
-    <version>1.0.4</version>
+    <version>1.0.5</version>
     <packaging>maven-plugin</packaging>
     <dependencies>
         <dependency>

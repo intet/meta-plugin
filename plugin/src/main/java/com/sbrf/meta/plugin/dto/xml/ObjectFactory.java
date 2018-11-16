@@ -30,11 +30,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Root }
+     * Create an instance of {@link ReverseRq }
      * 
      */
-    public Root createRoot() {
-        return new Root();
+    public ReverseRq createReverseRq() {
+        return new ReverseRq();
     }
 
     /**

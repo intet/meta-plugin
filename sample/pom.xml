@@ -15,8 +15,14 @@
             <plugin>
                 <groupId>com.sbt.meta</groupId>
                 <artifactId>plugin</artifactId>
-                <version>1.0.4</version>
-                <extensions>true</extensions>
+                <version>1.0.5</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>findApi</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <!-- <plugin>
                  <artifactId>maven-install-plugin</artifactId>

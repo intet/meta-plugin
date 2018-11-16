@@ -83,8 +83,13 @@ public class DtoUtils {
 
     public static ClassType getClassType(String className) {
         ClassType classType = new ClassType();
-        classType.setType(className.replace("[]", ""));
         classType.setIsArray(className.endsWith("[]"));
+        classType.setName(className.replace("[]", ""));
+        if (classType.getName().indexOf("<") != -1) {
+            classType.setType(className.substring(0, classType.getName().indexOf("<")));
+        } else {
+            classType.setType(classType.getName());
+        }
         return classType;
     }
 
@@ -101,6 +106,7 @@ public class DtoUtils {
         for (String type : types) {
             arr.getType().add(type);
         }
+        classType.setName(dtoClass);
         classType.setTypes(arr);
         return classType;
     }

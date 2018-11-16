@@ -100,7 +100,7 @@ public class ApiMethodInfo {
         result.setThrows(throwsArray);
         result.setOutput(getClassType(this.output));
         result.setComment(comment);
-        result.setSignature(signature);
+        // result.setSignature(signature);
         return result;
     }
 

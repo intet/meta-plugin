@@ -26,7 +26,6 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="input" type="{http://www.sberbank.ru/meta}inputType" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="output" type="{http://www.sberbank.ru/meta}classType"/>
  *         &lt;element name="version" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="signature" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="throws" type="{http://www.sberbank.ru/meta}throwsType"/>
  *         &lt;element name="comment" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
@@ -44,7 +43,6 @@ import javax.xml.bind.annotation.XmlType;
     "input",
     "output",
     "version",
-    "signature",
     "_throws",
     "comment"
 })
@@ -60,8 +58,6 @@ public class MethodType {
     protected ClassType output;
     @XmlElement(namespace = "http://www.sberbank.ru/meta", required = true)
     protected String version;
-    @XmlElement(namespace = "http://www.sberbank.ru/meta", required = true)
-    protected String signature;
     @XmlElement(name = "throws", namespace = "http://www.sberbank.ru/meta", required = true)
     protected ThrowsType _throws;
     @XmlElement(namespace = "http://www.sberbank.ru/meta")
@@ -190,30 +186,6 @@ public class MethodType {
      */
     public void setVersion(String value) {
         this.version = value;
-    }
-
-    /**
-     * Gets the value of the signature property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getSignature() {
-        return signature;
-    }
-
-    /**
-     * Sets the value of the signature property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setSignature(String value) {
-        this.signature = value;
     }
 
     /**

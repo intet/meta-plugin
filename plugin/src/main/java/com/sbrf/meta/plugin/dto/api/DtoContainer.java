@@ -21,9 +21,10 @@ public class DtoContainer extends Dto {
     }
 
 
-    public void toModule(Map<GAV, ModuleType> moduleMap, Map<String, Dto> dtoMap, Map<GAV, Set<GAV>> dependencyMap) {
+    public void toModule(Map<GAV, ModuleType> moduleMap, Map<String, Dto> dtoMap, Map<GAV, Set<GAV>> dependencyMap, String name) {
         DtoType result = new DtoType();
         result.setClazz(getClassType(dtoClass, superClass, elements));
+        result.getClazz().setName(name);
         FieldsType dtoArray = new FieldsType();
         for (Field field : fields.values()) {
             dtoArray.getField().add(field.toXml());
