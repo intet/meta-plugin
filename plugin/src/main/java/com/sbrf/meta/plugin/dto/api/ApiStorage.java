@@ -9,11 +9,10 @@ import org.json.JSONObject;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
 import java.io.StringWriter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class ApiStorage {
     //Api class - Api info
@@ -94,8 +93,11 @@ public class ApiStorage {
         for (ModuleType module : moduleMap.values()) {
             root.getModule().add(module);
         }
+        setTime(root);
+        root.setRqUID(UUID.randomUUID().toString().replaceAll("-", ""));
         return getString(root);
     }
+
 
     public void addComment(String api, String method, String comment) {
         ApiInfo apiInfo = this.apiMap.get(api);
@@ -133,6 +135,16 @@ public class ApiStorage {
         dtoMap.put(className, dto);
     }
 
+    private void setTime(ReverseRq root) {
+        try {
+            GregorianCalendar c = new GregorianCalendar();
+            c.setTime(new Date());
+            root.setRqTm(DatatypeFactory.newInstance().newXMLGregorianCalendar(c));
+        } catch (DatatypeConfigurationException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void toUfs() {
         UfsCandidateApiImportRqType rqType = new UfsCandidateApiImportRqType();
         for (ApiInfo apiInfo : apiMap.values()) {
@@ -140,4 +152,5 @@ public class ApiStorage {
 
         }
     }
+
 }
