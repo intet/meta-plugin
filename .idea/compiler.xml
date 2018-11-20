@@ -10,7 +10,6 @@
         <module name="sample" />
         <module name="sample2" />
         <module name="sample3" />
-        <module name="wrapper" />
       </profile>
     </annotationProcessing>
   </component>

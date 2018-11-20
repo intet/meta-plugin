@@ -92,38 +92,6 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>com.sbrf.meta</groupId>
-                <artifactId>meta-plugin</artifactId>
-                <version>1.0-SNAPSHOT</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.ow2.asm</groupId>
-                        <artifactId>asm</artifactId>
-                        <version>6.0</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.ow2.asm</groupId>
-                        <artifactId>asm-util</artifactId>
-                        <version>6.0</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>commons-io</groupId>
-                        <artifactId>commons-io</artifactId>
-                        <version>2.6</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.sonatype.aether</groupId>
-                        <artifactId>aether-api</artifactId>
-                        <version>1.8</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.sonatype.aether</groupId>
-                        <artifactId>aether-util</artifactId>
-                        <version>1.8</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-plugin-plugin</artifactId>
                 <version>3.5.2</version>
