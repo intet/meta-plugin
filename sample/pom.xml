@@ -57,4 +57,14 @@
             </plugin>
         </plugins>
     </build>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>pprb-cx-release-repo-upload</id>
+            <url>http://sbtnexus.ca.sbrf.ru:8081/nexus/content/repositories/PPRB_CX_release</url>
+        </snapshotRepository>
+        <repository>
+            <id>pprb-cx-release-repo-upload</id>
+            <url>http://sbtnexus.ca.sbrf.ru:8081/nexus/content/repositories/PPRB_CX_release</url>
+        </repository>
+    </distributionManagement>
 </project>

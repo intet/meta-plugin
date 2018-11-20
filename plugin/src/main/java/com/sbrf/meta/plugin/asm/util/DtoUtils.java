@@ -93,15 +93,8 @@ public class DtoUtils {
         return classType;
     }
 
-    public static ClassType getClassType(String dtoClass, String superClass) {
+    public static ClassType getClassType(String dtoClass, Collection<String> types) {
         ClassType classType = DtoUtils.getClassType(dtoClass);
-        classType.setSuper(superClass);
-        return classType;
-    }
-
-    public static ClassType getClassType(String dtoClass, String superClass, Collection<String> types) {
-        ClassType classType = DtoUtils.getClassType(dtoClass);
-        classType.setSuper(superClass);
         TypesType arr = new TypesType();
         for (String type : types) {
             arr.getType().add(type);

@@ -20,7 +20,6 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="type" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="isArray" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
- *         &lt;element name="super" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="types" type="{http://www.sberbank.ru/meta}typesType" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
@@ -35,7 +34,6 @@ import javax.xml.bind.annotation.XmlType;
     "name",
     "type",
     "isArray",
-    "_super",
     "types"
 })
 public class ClassType {
@@ -46,8 +44,6 @@ public class ClassType {
     protected String type;
     @XmlElement(namespace = "http://www.sberbank.ru/meta", defaultValue = "false")
     protected Boolean isArray;
-    @XmlElement(name = "super", namespace = "http://www.sberbank.ru/meta")
-    protected String _super;
     @XmlElement(namespace = "http://www.sberbank.ru/meta")
     protected TypesType types;
 
@@ -121,30 +117,6 @@ public class ClassType {
      */
     public void setIsArray(Boolean value) {
         this.isArray = value;
-    }
-
-    /**
-     * Gets the value of the super property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getSuper() {
-        return _super;
-    }
-
-    /**
-     * Sets the value of the super property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setSuper(String value) {
-        this._super = value;
     }
 
     /**

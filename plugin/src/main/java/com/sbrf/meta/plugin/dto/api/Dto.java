@@ -81,7 +81,8 @@ public class Dto {
 
     public void toModule(Map<GAV, ModuleType> moduleMap, Map<String, Dto> dtoMap, Map<GAV, Set<GAV>> dependencyMap, String key) {
         DtoType result = new DtoType();
-        result.setClazz(getClassType(dtoClass, superClass));
+        result.setClazz(getClassType(dtoClass));
+        result.setParent(superClass);
         result.getClazz().setName(key);
         FieldsType dtoArray = new FieldsType();
         for (Field field : fields.values()) {

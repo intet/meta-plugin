@@ -2,6 +2,7 @@ package com.sbrf.meta.plugin.launch;
 
 import com.sbrf.meta.plugin.dto.api.GAV;
 import org.apache.maven.artifact.Artifact;
+import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.project.MavenProject;
 import org.eclipse.aether.RepositorySystem;
 import org.eclipse.aether.RepositorySystemSession;
@@ -23,17 +24,18 @@ public class FileUtil {
             if (file == null)
                 continue;
 
-            String repository = getRepositoryUrl(repoSystem, repoSession, repositories, artifact);
+            String repository = getRepositoryUrl(repoSystem, repoSession, repositories, artifact, project.getDistributionManagementArtifactRepository());
             result.put(new GAV(artifact, repository, artifact.getClassifier()), file);
 
         }
         if (project.getArtifact().getFile() != null) {
-            result.put(new GAV(project.getArtifact(), "", ""), project.getArtifact().getFile());
+            String repository = project.getDistributionManagementArtifactRepository() != null ? project.getDistributionManagementArtifactRepository().getUrl() : "";
+            result.put(new GAV(project.getArtifact(), repository, ""), project.getArtifact().getFile());
         }
         return result;
     }
 
-    private static String getRepositoryUrl(RepositorySystem repoSystem, RepositorySystemSession repoSession, List<RemoteRepository> repositories, Artifact artifact) {
+    private static String getRepositoryUrl(RepositorySystem repoSystem, RepositorySystemSession repoSession, List<RemoteRepository> repositories, Artifact artifact, ArtifactRepository defaultRepository) {
         ArtifactResult artifactResult = null;
         org.eclipse.aether.artifact.Artifact aetherArtifact = new DefaultArtifact(
                 artifact.getGroupId(),
@@ -51,6 +53,8 @@ public class FileUtil {
         String repository = null;
         if (artifactResult != null && artifactResult.getRepository() instanceof RemoteRepository) {
             repository = ((RemoteRepository) artifactResult.getRepository()).getUrl();
+        } else if (defaultRepository != null) {
+            repository = defaultRepository.getUrl();
         }
         return repository;
     }

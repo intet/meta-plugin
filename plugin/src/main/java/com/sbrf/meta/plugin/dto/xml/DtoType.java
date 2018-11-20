@@ -19,6 +19,7 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence>
  *         &lt;element name="class" type="{http://www.sberbank.ru/meta}classType"/>
  *         &lt;element name="fields" type="{http://www.sberbank.ru/meta}fieldsType"/>
+ *         &lt;element name="parent" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -30,7 +31,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "dtoType", namespace = "http://www.sberbank.ru/meta", propOrder = {
     "clazz",
-    "fields"
+    "fields",
+    "parent"
 })
 public class DtoType {
 
@@ -38,6 +40,8 @@ public class DtoType {
     protected ClassType clazz;
     @XmlElement(namespace = "http://www.sberbank.ru/meta", required = true)
     protected FieldsType fields;
+    @XmlElement(namespace = "http://www.sberbank.ru/meta")
+    protected String parent;
 
     /**
      * Gets the value of the clazz property.
@@ -85,6 +89,30 @@ public class DtoType {
      */
     public void setFields(FieldsType value) {
         this.fields = value;
+    }
+
+    /**
+     * Gets the value of the parent property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getParent() {
+        return parent;
+    }
+
+    /**
+     * Sets the value of the parent property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setParent(String value) {
+        this.parent = value;
     }
 
 }

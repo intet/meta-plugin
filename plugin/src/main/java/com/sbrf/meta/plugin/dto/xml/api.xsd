@@ -191,6 +191,11 @@
                     <xs:documentation>Поля DTO</xs:documentation>
                 </xs:annotation>
             </xs:element>
+            <xs:element type="xs:string" name="parent" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Класс от которого унаследован класс</xs:documentation>
+                </xs:annotation>
+            </xs:element>
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="fieldsType">
@@ -255,11 +260,6 @@
             <xs:element type="xs:boolean" name="isArray" default="false" minOccurs="0">
                 <xs:annotation>
                     <xs:documentation>Является ли массивом</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element type="xs:string" name="super" minOccurs="0">
-                <xs:annotation>
-                    <xs:documentation>Класс от которого унаследован класс</xs:documentation>
                 </xs:annotation>
             </xs:element>
             <xs:element type="ns1:typesType" name="types" minOccurs="0">
