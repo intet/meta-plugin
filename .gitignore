@@ -1,4 +1,4 @@
-# Created by .ignore support com.sbfr.meta.plugin (hsz.mobi)
+# Created by .ignore support com.sbt.meta.plugin (hsz.mobi)
 ### Maven template
 target/
 pom.xml.tag
@@ -69,7 +69,7 @@ hs_err_pid*
 # CMake
 cmake-build-*/
 
-# Mongo Explorer com.sbfr.meta.plugin
+# Mongo Explorer com.sbt.meta.plugin
 .idea/**/mongoSettings.xml
 
 # File-based project format
@@ -78,16 +78,16 @@ cmake-build-*/
 # IntelliJ
 out/
 
-# mpeltonen/sbt-idea com.sbfr.meta.plugin
+# mpeltonen/sbt-idea com.sbt.meta.plugin
 .idea_modules/
 
-# JIRA com.sbfr.meta.plugin
-atlassian-ide-com.sbfr.meta.plugin.xml
+# JIRA com.sbt.meta.plugin
+atlassian-ide-com.sbt.meta.plugin.xml
 
-# Cursive Clojure com.sbfr.meta.plugin
+# Cursive Clojure com.sbt.meta.plugin
 .idea/replstate.xml
 
-# Crashlytics com.sbfr.meta.plugin (for Android Studio and IntelliJ)
+# Crashlytics com.sbt.meta.plugin (for Android Studio and IntelliJ)
 com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
